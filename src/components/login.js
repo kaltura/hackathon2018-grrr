@@ -13,7 +13,15 @@ class Login extends Component {
             nickname: "",
             showSplash: true
         };
-        setTimeout(() => this.setState({showSplash: false}), 3000)
+        setTimeout(() =>  { 
+            this.setState({showSplash: false})
+            var userId = localStorage.getItem('userId');
+            if(userId) {
+                this.state.email = userId;
+                this.state.nickname = localStorage.getItem('nickname');
+                this.props.history.push('/where2eat');
+            }
+        }, 3000)
     }
 
 
