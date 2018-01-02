@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Link, Switch, HashRouter } from 'react-router-dom';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
+import {registerUser} from "../actions/users";
 
 class Login extends Component {
     constructor(props) {
@@ -28,18 +29,29 @@ class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
+        registerUser(this.state.email, this.state.nickname, (result) => {
+            console.log(result);
+            if(result !== false) {
+                localStorage.setItem('userId', this.state.email);
+                localStorage.setItem('nickname', this.state.nickname);
+                this.props.history.push('/groups');
+            } else {
+                alert('login failed');
+            }
+        });
     }
 
     render() {
         if (this.state.showSplash) {
             return(
-            <div className="Login">
-                <img src={'../../assets/food_logo.png'}/>
+            <div id="logoDiv">
+                <img className="displayed" id="logo" src={'../../assets/food_logo.png'}/>
             </div>);
         }
         return (
-            <div className="Login">
-                <img src={'../../assets/food.png'}/>
+            <div id="loginForm" className="Login">
+                <img src={'../../assets/food.png'}
+                />
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="email" bsSize="large">
                         <FormControl

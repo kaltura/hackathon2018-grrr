@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { listMyGroups } from '../actions/groups.js'
+import { listMyGroups, listOtherGroups, joinGroup } from '../actions/groups.js'
+import Group from './group.js'
 
 class Groups extends Component {
     constructor(props) {
@@ -9,8 +10,10 @@ class Groups extends Component {
             myGroups: [],
             otherGroups: []
         }
+        this.userId = localStorage.getItem('userId');
+        this.nickname = localStorage.getItem('nickname');
     }
-
+    
     componentDidMount() {
         // fetch data from API
         listMyGroups('gonen.radai@kaltura.com', (result) => {
@@ -19,27 +22,26 @@ class Groups extends Component {
                 this.setState({myGroups: result});
             }
         });
-
-        let otherGroups = [ '1234' , '5678' , '989898989' ];
-        setTimeout(() => {
-            this.setState({otherGroups: otherGroups});
-            console.log("updated my groups");
-            console.log(this.state.otherGroups.length);
-        }, 1000);
+        listOtherGroups('gonen.radai@kaltura.com', (result) => {
+            console.log(result);
+            if(result !== false) {
+                this.setState({otherGroups: result});
+            }
+        });
     }
     render() {
         console.log("rendering component");
         if(this.state.myGroups.length > 0) {
             var myGroupsList = this.state.myGroups.map((group) => {
                 return(
-                    <li key={group.name}>{group.name}</li>
+                    <li key={group.name}><Group {...{group: group, canJoin: false}}></Group></li>
                 )
               });
         }
         if(this.state.otherGroups.length > 0) {
             var otherGroupsList = this.state.otherGroups.map((group) => {
                 return(
-                    <li key={group}>{group}</li>
+                    <li key={group.name}><Group {...{group: group, canJoin: true}}></Group></li>
                 )
               });
         }
@@ -64,6 +66,7 @@ class Groups extends Component {
                     </div>
                     }
                 </div>
+                <button>Add Group</button>
             </div>
         )
     }
