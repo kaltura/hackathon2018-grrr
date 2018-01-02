@@ -10,8 +10,10 @@ class Groups extends Component {
             myGroups: [],
             otherGroups: []
         }
+        this.userId = localStorage.getItem('userId');
+        this.nickname = localStorage.getItem('nickname');
     }
-
+    
     componentDidMount() {
         // fetch data from API
         listMyGroups('gonen.radai@kaltura.com', (result) => {
