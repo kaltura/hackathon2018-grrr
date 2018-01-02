@@ -6,8 +6,8 @@ class Profile extends Component {
         super(props);
         this.state = {
             name: 'username',
-            preferences: 'lalala',
-            kosher: false,
+            preferences: '',
+            kosher: true,
             veto: ''
         }
     }
@@ -21,7 +21,7 @@ class Profile extends Component {
     }
 
     handleKosherChange(e) {
-        this.setState({ kosher: e.target.value });
+        this.setState({ kosher: e.target.checked });
     }
 
     handleVetoChange(e) {
@@ -41,11 +41,14 @@ class Profile extends Component {
                     <div>
                         <ControlLabel>Preferences</ControlLabel>
                         <FormControl
-                            type="text"
+                            componentClass="select"
                             value={this.state.preferences}
-                            placeholder="Enter text"
                             onChange={this.handlePrefsChange.bind(this)}
-                        />
+                        >
+                            <option value="italian">Italian</option>
+                            <option value="oriental">Oriental</option>
+                            <option value="salad">Salad</option>
+                        </FormControl>
                         <Checkbox value={this.state.kosher}
                                   onChange={this.handleKosherChange.bind(this)} >
                             Kosher
@@ -61,6 +64,7 @@ class Profile extends Component {
                     </div>
                     <button type="submit">Submit</button>
                 </form>
+                {JSON.stringify(this.state)}
             </div>
         )
     }
