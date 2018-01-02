@@ -44,17 +44,21 @@ class Login extends Component {
     render() {
         if (this.state.showSplash) {
             return(
+                <div background="#f8d44c">
             <div id="logoDiv">
-                <img className="displayed" id="logo" src={'../../assets/food_logo.png'}/>
-            </div>);
+                <img id="logo" src={'../../assets/food_logo.png'}/>
+            </div>
+                    </div>);
         }
         return (
+            <div background="#f8d44c">
             <div id="loginForm" className="Login">
-                <img src={'../../assets/food.png'}
+                <img id="foodLogo" src={'../../assets/food.png'}
                 />
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="email" bsSize="large">
                         <FormControl
+                            className="textInput"
                             autoFocus
                             type="email"
                             value={this.state.email}
@@ -64,13 +68,14 @@ class Login extends Component {
                     </FormGroup>
                     <FormGroup controlId="nickname" bsSize="large">
                         <FormControl
+                            className="textInput"
                             value={this.state.nickname}
                             onChange={this.handleChange}
                             type="text"
                             placeholder="nickname"
                         />
                     </FormGroup>
-                    <Button
+                    <Button id="submit"
                         block
                         bsSize="large"
                         disabled={!this.validateForm()}
@@ -79,6 +84,7 @@ class Login extends Component {
                         Grrr...
                     </Button>
                 </form>
+            </div>
             </div>
         );
     }
