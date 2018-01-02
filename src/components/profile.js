@@ -1,15 +1,35 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, FormControl, ControlLabel } from "react-bootstrap";
+import {getUser} from "../actions/users";
+
 
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            email: '',
             name: 'username',
             preferences: '',
             kosher: true,
             veto: ''
         }
+    }
+
+    componentDidMount() {
+        // fetch data from API
+        getUser('gonen.radai@kaltura.com', (result) => {
+            console.log(result);
+            if(result !== false) {
+                // {email:<>, nick: <>, kosher:<>, veto:<>, preferences:[]}
+                this.setState({
+                    email: result.email,
+                    name: result.nick,
+                    kosher: result.kosher,
+                    veto: result.veto,
+                    preferences: result.preferences
+                });
+            }
+        });
     }
 
     handleNameChange(e) {
