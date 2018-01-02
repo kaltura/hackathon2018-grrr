@@ -19,17 +19,34 @@ export function registerUser(email, nick, cb){
   }
 export function getUser(email, cb){
     superagent.get(config.BASE + 'users?userId='+email)
-    .set('Content-Type', 'application/json')
-    .send()
-    .end((err, res) => {
-        console.log("got user, result:");
-        console.log(res);
-        if(err) {
-            cb(false);
-            return false;
-        } else {
-            cb(true);
-            return true;
-        }
-    })
+        .set('Content-Type', 'application/json')
+        .send()
+        .end((err, res) => {
+            console.log("got user, result:");
+            console.log(res);
+            if(err) {
+                cb(false);
+                return false;
+            } else {
+                cb(res);
+                return true;
+            }
+        })
+}
+export function updateUser(email, nick, kosher, veto, preferences, cb){
+    // users?userId=<email>&nick=<nick>&kosher=true&veto=<restaurant_id>&preferences=<id,id,...id of preferencesId>
+    superagent.post(config.BASE + 'users?userId='+email+'&nick='+nick+'&kosher='+kosher+'&veto='+veto+'&preferences='+preferences)
+        .set('Content-Type', 'application/json')
+        .send()
+        .end((err, res) => {
+            console.log("updated user, result:");
+            console.log(res);
+            if(err) {
+                cb(false);
+                return false;
+            } else {
+                cb(res);
+                return true;
+            }
+        })
 }

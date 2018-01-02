@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, FormControl, ControlLabel } from "react-bootstrap";
-import {getUser} from "../actions/users";
+import {getUser, updateUser} from "../actions/users";
 
 
 class Profile extends Component {
@@ -18,15 +18,16 @@ class Profile extends Component {
     componentDidMount() {
         // fetch data from API
         getUser('gonen.radai@kaltura.com', (result) => {
-            console.log(result);
+            //console.log(result);
             if(result !== false) {
                 // {email:<>, nick: <>, kosher:<>, veto:<>, preferences:[]}
+                let res = result.body.objects[0];
                 this.setState({
-                    email: result.email,
-                    name: result.nick,
-                    kosher: result.kosher,
-                    veto: result.veto,
-                    preferences: result.preferences
+                    email: res.email,
+                    name: res.nick,
+                    kosher: res.kosher,
+                    veto: res.veto,
+                    preferences: res.preferences
                 });
             }
         });
@@ -46,6 +47,17 @@ class Profile extends Component {
 
     handleVetoChange(e) {
         this.setState({ veto: e.target.value });
+    }
+
+    handleSubmit() {
+        //email, nick, kosher, veto, preferences, cb
+        updateUser(this.state.email, this.state.name, this.state.kosher, this.state.veto, this.state.preferences, (result) => {
+            console.log(result);
+            if(result !== false) {
+
+
+            }
+        })
     }
 
     render() {
@@ -82,7 +94,7 @@ class Profile extends Component {
 
                         />
                     </div>
-                    <button type="submit">Submit</button>
+                    <Button type="submit" onClick={this.handleSubmit.bind(this)}>Submit</Button>
                 </form>
                 {JSON.stringify(this.state)}
             </div>
