@@ -1,5 +1,5 @@
 import superagent from 'superagent'
-import * as config from '../config.js';
+import * as config from '../config';
 
 export function registerUser(email, nick, cb){
     superagent.post(config.BASE + 'users?userId='+email+'&nick='+nick)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, FormControl, ControlLabel } from "react-bootstrap";
 import {getUser, updateUser} from "../actions/users";
+import {listRestaurants} from "../actions/restaurants";
 
 
 class Profile extends Component {
@@ -8,11 +9,12 @@ class Profile extends Component {
         super(props);
         this.state = {
             email: '',
-            name: 'username',
+            name: '',
             preferences: '',
-            kosher: true,
+            kosher: false,
             veto: ''
-        }
+        };
+        this.restaurants = [];
     }
 
     componentDidMount() {
@@ -30,6 +32,14 @@ class Profile extends Component {
                     preferences: res.preferences
                 });
             }
+        });
+
+        listRestaurants('', (result) => {
+            let rest = result.body.Data;
+            rest.unshift({RestaurantId:"", RestaurantName: "Select..."})
+            this.restaurants = rest.map(v => (
+                <option value={v.RestaurantId}>{v.RestaurantName}</option>
+            ));
         });
     }
 
@@ -73,10 +83,12 @@ class Profile extends Component {
                     <div>
                         <ControlLabel>Preferences</ControlLabel>
                         <FormControl
+                            placeHolder={"Please Choose"}
                             componentClass="select"
                             value={this.state.preferences}
                             onChange={this.handlePrefsChange.bind(this)}
                         >
+                            <option value="">Select...</option>
                             <option value="italian">Italian</option>
                             <option value="oriental">Oriental</option>
                             <option value="salad">Salad</option>
@@ -88,11 +100,13 @@ class Profile extends Component {
 
                         <ControlLabel>Veto</ControlLabel>
                         <FormControl
-                            type="text"
+                            componentClass="select"
                             value={this.state.veto}
                             onChange={this.handleVetoChange.bind(this)}
+                        >
+                            {this.restaurants}
+                        </FormControl>
 
-                        />
                     </div>
                     <Button type="submit" onClick={this.handleSubmit.bind(this)}>Submit</Button>
                 </form>
