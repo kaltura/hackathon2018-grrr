@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Link, Switch, HashRouter } from 'react-router-dom';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import {findDOMNode} from 'React-dom';
 import "./Login.css";
 
 class Login extends Component {
@@ -29,16 +28,6 @@ class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.visible !== this.props.visible) {
-            if (nextProps.visible) {
-                $(findDOMNode(this)).stop( true, true ).fadeIn('slow');
-            } else {
-                $(findDOMNode(this)).stop( true, true ).fadeOut('slow');
-            }
-        }
     }
 
     render() {
