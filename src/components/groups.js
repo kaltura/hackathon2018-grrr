@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { listMyGroups } from '../actions/groups.js'
 
 class Groups extends Component {
     constructor(props) {
@@ -12,12 +13,12 @@ class Groups extends Component {
 
     componentDidMount() {
         // fetch data from API
-        let myGroups = [ 'test' , 'shmest' , 'applications' ];
-        setTimeout(() => {
-            this.setState({myGroups: myGroups});
-            console.log("updated my groups");
-            console.log(this.state.myGroups.length);
-        }, 1000);
+        listMyGroups('gonen.radai@kaltura.com', (result) => {
+            console.log(result);
+            if(result !== false) {
+                this.setState({myGroups: result});
+            }
+        });
 
         let otherGroups = [ '1234' , '5678' , '989898989' ];
         setTimeout(() => {
@@ -31,7 +32,7 @@ class Groups extends Component {
         if(this.state.myGroups.length > 0) {
             var myGroupsList = this.state.myGroups.map((group) => {
                 return(
-                    <li key={group}>{group}</li>
+                    <li key={group.name}>{group.name}</li>
                 )
               });
         }
@@ -50,7 +51,7 @@ class Groups extends Component {
                     <div>You are not a member of any group yet.</div>
                     :
                     <div>
-                        <ul>{myGroupsList}</ul>
+                        <ul className="list-unstyled">{myGroupsList}</ul>
                     </div>
                     }
                 </div>
@@ -59,7 +60,7 @@ class Groups extends Component {
                     <div>There are no more groups you can join... maybe create one?</div>
                     :
                     <div>
-                        <ul>{otherGroupsList}</ul>
+                        <ul className="list-unstyled">{otherGroupsList}</ul>
                     </div>
                     }
                 </div>
