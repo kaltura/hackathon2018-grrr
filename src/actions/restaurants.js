@@ -10,8 +10,8 @@ export function listRestaurants(keyword, cb){
     .set('Content-Type', 'application/json')
     .send()
     .end((err, res) => {
-        console.log("list restaurants, result:");
-        console.log(res);
+        // console.log("list restaurants, result:");
+        // console.log(res);
         if(err) {
             cb(false);
             return false;
