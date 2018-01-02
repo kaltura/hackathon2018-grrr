@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Checkbox, FormControl, ControlLabel } from "react-bootstrap";
 import {getUser, updateUser} from "../actions/users";
 import {listRestaurants} from "../actions/restaurants";
-
+import Header from './header.js';
 
 class Profile extends Component {
     constructor(props) {
@@ -73,6 +73,7 @@ class Profile extends Component {
     render() {
         return (
             <div>
+                <Header title="My Profile"></Header>
                 <form>
                 <div><FormControl
                     type="text"

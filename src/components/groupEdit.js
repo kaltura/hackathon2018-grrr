@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Checkbox, FormControl, ControlLabel } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Redirect, Link, Switch, HashRouter } from 'react-router-dom';
 import { getGroup } from '../actions/groups.js'
+import Header from './header.js';
 
 class GroupEdit extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class GroupEdit extends Component {
     render() {
         return (
             <div>
-                <div className="pageTitle">Edit Group</div>
+                <Header title="Edit Group"></Header>
             <form>
                 <div>
                     <ControlLabel>Group Name:</ControlLabel>
@@ -62,9 +63,7 @@ class GroupEdit extends Component {
                     <ControlLabel>Members:</ControlLabel>
                     { this.state.users.map((userEmail) => {
                         return (
-                            <div>
-                                <span>{userEmail}</span><br />
-                            </div>
+                            <div key={userEmail}>{userEmail}</div>
                         )
                     })}
                 </div>

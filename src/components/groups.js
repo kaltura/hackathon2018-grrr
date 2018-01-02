@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { listMyGroups, listOtherGroups, joinGroup } from '../actions/groups.js'
 import Group from './group.js'
+import Header from './header.js';
 
 class Groups extends Component {
     constructor(props) {
@@ -47,6 +48,7 @@ class Groups extends Component {
         }
         return (
             <div>
+                <Header title="Groups"></Header>
                 <div>Groups</div>
                 <div className="myGroupsList">
                     { (this.state.myGroups.length == 0)? 
