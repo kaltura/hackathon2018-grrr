@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Button } from "react-bootstrap";
+import {registerResult} from "../actions/results";
+
 
 class Decision extends Component {
     constructor (props) {
@@ -51,8 +54,32 @@ class Decision extends Component {
         },
         details : {
             margin: "48px 0",
-        }
+        },
+        submitWrap : {
+            padding: '10px 24px 20px'
+        },
+        submitButton : {
+            width: '100%',
+            padding: '15px',
+            borderRadius: '4px',
+            backgroundColor: '#e24026',
+            border: 'solid 3px #000000',
+            color: '#ffffff',
+            fontSize: '14px',
+            fontWeight: 'bold',
+        },
     };
+
+    handleSubmit(e) {
+        registerResult(this.state.emails, this.state.restaurant.RestaurantId, this.state.restaurant.restaurantName, (result) => {
+            console.log(result);
+            if(result !== false) {
+                //this.setState({ saved: true });
+            }
+        });
+        e.preventDefault();
+    };
+
 
     render() {
         return (
@@ -72,6 +99,12 @@ class Decision extends Component {
                     <img src={"/assets/phone.svg"}/>
                     <span style={this.styles.address}>{this.state.restaurant.RestaurantPhone}</span>
                 </div>
+            </div>
+            <div style={this.styles.submitWrap}>
+                <Button type="submit" onClick={this.handleSubmit.bind(this)}
+                        style={this.styles.submitButton}>
+                    YUM!
+                </Button>
             </div>
         </div>
         )
