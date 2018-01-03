@@ -7,6 +7,8 @@ const users = require('./users.js');
 const groups = require('./groups.js');
 const rest = require('./restaurant.js');
 
+// connect to DB once:
+const dbc = dal.connectDatabase();
 
 // Add headers
 app.use(function (req, res, next) {
@@ -50,7 +52,6 @@ app.get('/results', (req, res) => resultsGet(req, res));
 app.listen(3001, () => console.log('Example app listening on port 3001!'));
 
 resultsGet = function(req, res) {
-    var dbc =dal.connectDatabase();
     results.getUsers(dbc, req.query).then(function(rows) {
         return new rest.getRests(dbc, req.query, rows).then(function() {
 
@@ -63,21 +64,18 @@ resultsGet = function(req, res) {
 };
 
 restGet = function(req, res) {
-    var dbc =dal.connectDatabase();
     rest.getRests(dbc, req.query).then(function(rows) {
         res.send(helpers.getListResponse(rows));
     });
 };
 
 userHistoryGet = function(req, res) {
-    var dbc =dal.connectDatabase();
     users.getUserHistory(dbc, req.params).then(function(rows) {
         res.send(helpers.getListResponse(rows));
     });
 };
 
 usersHistoryPost = function(req, res) {
-    var dbc =dal.connectDatabase();
     users.postUserHistory(dbc, req.query).then(function() {
         res.send(true);
     });
@@ -85,7 +83,6 @@ usersHistoryPost = function(req, res) {
 
 
 groupGet = function(req, res) {
-    var dbc =dal.connectDatabase();
     groups.getGroups(dbc, req.query).then(function(rows) {
         groups.getGroupUsers(dbc, rows).then(function(userRows) {
             var resultDataSet = [];
@@ -115,7 +112,6 @@ groupGet = function(req, res) {
 };
 
 groupAddUser = function(req, res) {
-    var dbc =dal.connectDatabase();
     if (!req.params['userId'] || !req.params['groupName']) {
         console.error("missing params: need userId, and groupName!!!");
         console.log(req.params);
@@ -136,7 +132,6 @@ groupAddUser = function(req, res) {
 };
 
 groupDeleteUser = function(req, res) {
-    var dbc =dal.connectDatabase();
     if (!req.params['userId'] || !req.params['groupName']) {
         console.error("missing params: need userId, and groupName!!!");
         console.log(req.params);
@@ -157,7 +152,6 @@ groupDeleteUser = function(req, res) {
 };
 
 groupPost = function(req, res) {
-    var dbc = dal.connectDatabase();
     groups.addGroup(dbc, req.query)
         .then(function(rows) {
             res.send(true);
@@ -169,14 +163,12 @@ groupPost = function(req, res) {
 
 usersGet = function(req, res) {
 
-    var dbc =dal.connectDatabase();
     users.getUsers(dbc, req.query).then(function(rows) {
         res.send(helpers.getListResponse(rows));
     });
 };
 
 usersPost = function(req,res) {
-    var dbc =dal.connectDatabase();
     users.updateUsers(dbc, req.query).then(function(rows) {
         res.send(true);
     }, function (err) {
