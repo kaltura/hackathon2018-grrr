@@ -49,26 +49,28 @@ class Groups extends Component {
         return (
             <div>
                 <Header title="Groups"></Header>
-                <div>Groups</div>
-                <div className="myGroupsList">
-                    { (this.state.myGroups.length == 0)? 
-                    <div>You are not a member of any group yet.</div>
-                    :
-                    <div>
-                        <ul className="list-unstyled">{myGroupsList}</ul>
+                <div className="wrap padContent">
+                    <div>Groups</div>
+                    <div className="myGroupsList">
+                        { (this.state.myGroups.length == 0)? 
+                        <div>You are not a member of any group yet.</div>
+                        :
+                        <div>
+                            <ul className="list-unstyled">{myGroupsList}</ul>
+                        </div>
+                        }
                     </div>
-                    }
-                </div>
-                <div className="otherGroupsList">
-                    { (this.state.otherGroups.length == 0)? 
-                    <div>There are no more groups you can join... maybe create one?</div>
-                    :
-                    <div>
-                        <ul className="list-unstyled">{otherGroupsList}</ul>
+                    <div className="otherGroupsList">
+                        { (this.state.otherGroups.length == 0)? 
+                        <div>There are no more groups you can join... maybe create one?</div>
+                        :
+                        <div>
+                            <ul className="list-unstyled">{otherGroupsList}</ul>
+                        </div>
+                        }
                     </div>
-                    }
+                    <button>Add Group</button>
                 </div>
-                <button>Add Group</button>
             </div>
         )
     }
