@@ -87,6 +87,7 @@ class Header extends Component {
 
                         <div className="collapse navbar-collapse" style={styles.menuBackground} id="bs-example-navbar-collapse-1">
                             <ul className="nav navbar-nav">
+                                <li><a href="/where2eat">Where to Eat?</a></li>
                                 <li><a href="/profile">My Profile</a></li>
                                 <li><a href="/groups">Groups</a></li>
                                 <li><a href="/logout">Logout</a></li>
