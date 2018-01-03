@@ -124,7 +124,7 @@ class WhereToEat extends Component {
                 localStorage.setItem('result', result);
                 this.props.history.push('/decision');
             } else {
-                alert('login failed');
+                alert('failed getting result failed');
             }
         });
     }
