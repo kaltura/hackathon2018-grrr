@@ -14,6 +14,7 @@ const styles = {
         marginTop: '21px',
         marginLeft: '10px',
         fontSize: '18px',
+        fontWeight: '600',
     },
     eat: {
         display: 'inline-block',
