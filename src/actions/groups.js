@@ -3,7 +3,7 @@ import * as config from '../config.js';
 
 export function listMyGroups(email, cb){
     console.log("going to make API call to "+config.BASE);
-    superagent.get(config.BASE + 'users/groups?userId='+email+'&isMemberOf=1')
+    superagent.get(config.BASE + 'groups?userId='+email+'&isMemberOf=1')
     .set('Content-Type', 'application/json')
     .send()
     .end((err, res) => {
@@ -13,14 +13,14 @@ export function listMyGroups(email, cb){
         cb(false);
         return false;
       } else {
-        cb(res.body.objects);
+        cb(res.body.rows);
         return true;
       }
     })
   }
 
   export function listOtherGroups(email, cb) {
-    superagent.get(config.BASE + 'users/groups?userId='+email)
+    superagent.get(config.BASE + 'groups?userId='+email)
     .set('Content-Type', 'application/json')
     .send()
     .end((err, res) => {
@@ -30,7 +30,7 @@ export function listMyGroups(email, cb){
         cb(false);
         return false;
       } else {
-        cb(res.body.objects);
+        cb(res.body.rows);
         return true;
       }
     })
@@ -41,6 +41,7 @@ export function listMyGroups(email, cb){
     .set('Content-Type', 'application/json')
     .send()
     .end((err, res) => {
+        debugger;
       console.log("getting groups of user, result:");
       console.log(res);
       if(err) {
@@ -87,11 +88,12 @@ export function listMyGroups(email, cb){
     })
   }
 
-  export function addGroup(groupName, cb) {
-    superagent.post(config.BASE + 'users/groups?companyName=kaltura.com&groupName='+groupName)
+  export function addGroup(groupName, email, cb) {
+    superagent.post(config.BASE + 'groups?userId='+email+'&groupName='+groupName)
     .set('Content-Type', 'application/json')
     .send()
     .end((err, res) => {
+        debugger;
       console.log("getting groups of user, result:");
       console.log(res);
       if(err) {

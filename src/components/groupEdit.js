@@ -58,9 +58,14 @@ class GroupEdit extends Component {
     }
 
     addGroup(e) {
-        addGroup(this.state.name, (res) => {
+        var userId = localStorage.getItem('userId');
+        addGroup(this.state.name, userId, (res) => {
             alert("cool! group added...");
+            joinGroup(userId, this.state.name, (res) => {
+                alert("cool, added user to group "+this.state.name);
+            });
         });
+        e.preventDefault();
     }
     render() {
         return (

@@ -41,19 +41,22 @@ class Groups extends Component {
             }
         });
     }
+    memberOf(groupName) {
+        var left = this.state.myGroups.filter((group) => {
+            if(group.name === groupName) return true;
+            return false;
+        });
+        return left.length > 0;
+    }
     render() {
-        console.log("rendering component");
-        if(this.state.myGroups.length > 0) {
-            var myGroupsList = this.state.myGroups.map((group) => {
-                return(
-                    <li key={group.name}><Group {...{group: group, canJoin: false}}></Group></li>
-                )
-              });
-        }
         if(this.state.otherGroups.length > 0) {
             var otherGroupsList = this.state.otherGroups.map((group) => {
+                var iCanJoin = true;
+                if(this.memberOf(group.name)) {
+                    iCanJoin = false;
+                }
                 return(
-                    <li key={group.name}><Group {...{group: group, canJoin: true}}></Group></li>
+                    <li key={group.name}><Group {...{group: group, canJoin: iCanJoin}}></Group></li>
                 )
               });
         }
@@ -61,16 +64,7 @@ class Groups extends Component {
             <div>
                 <Header title="Groups"></Header>
                 <div className="wrap padContent">
-                    <div className="myGroupsList">
-                        { (this.state.myGroups.length == 0)? 
-                        <div>You are not a member of any group yet.</div>
-                        :
-                        <div>
-                            <ul className="list-unstyled">{myGroupsList}</ul>
-                        </div>
-                        }
-                    </div>
-                    <div className="otherGroupsList">
+                    <div className="groupsList">
                         { (this.state.otherGroups.length == 0)? 
                         <div>There are no more groups you can join... maybe create one?</div>
                         :

@@ -58,7 +58,7 @@ class Login extends Component {
             return(
                 <div background="#f8d44c">
             <div id="logoDiv">
-                <img id="logo" src={'../../assets/food_logo.png'}/>
+                <img id="logo" src={'../../assets/food-logo.svg'}/>
             </div>
                     </div>);
         }
