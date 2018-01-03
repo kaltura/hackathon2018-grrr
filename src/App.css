@@ -8,4 +8,19 @@
   height: 56px;
   background-color: #e24026;
   padding: 20px 24px;
+  color: #ffffff;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.6px;
+}
+.pageTitle .form-control {
+  color: #ffffff;
+  background-color: #e24026;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  border: none;
 }
