@@ -66,7 +66,30 @@ userHistoryGet = function(req, res) {
 groupGet = function(req, res) {
     var dbc =dal.connectDatabase();
     groups.getGroups(dbc, req.query).then(function(rows) {
-        res.send(helpers.getListResponse(rows));
+        groups.getGroupUsers(dbc, rows).then(function(userRows) {
+            var resultDataSet = [];
+            for(i=0;i<rows.length;i++) {
+                console.log("working on group "+rows[i].name);
+                var group = { 
+                    name: rows[i].name,
+                    picture: rows[i].picture,
+                    company: rows[i].company,
+                    users: []
+                }
+                var countUsers = 0;
+                for(j=0;j<userRows.length;j++) {
+                    console.log("checking on "+userRows[j].userId + " in "+group.name);
+                    if(userRows[j].name === group.name) {
+                        console.log(userRows);
+                        group.users[countUsers] = userRows[j].userId;
+                        console.log(userRows);
+                        countUsers++;
+                    }
+                }
+                resultDataSet[i] = group;
+            }
+            res.send(helpers.getListResponse(resultDataSet));
+        });
     });
 };
 

@@ -33,6 +33,26 @@ exports.getGroups = function(dbConnection, query) {
     });
 };
 
+exports.getGroupUsers = function(dbConnection, groupRows) {
+    var whereClause = ' where name in (';
+    for(i=0;i<groupRows.length;i++) {
+        whereClause += '"'+groupRows[i].name+'"';
+        if(i < (groupRows.length -1)) { // not last item
+            whereClause += ',';
+        }
+    }
+    whereClause += ')';
+    console.log(whereClause);
+    return new Promise(function(resolve,reject) {
+        console.log('SELECT * from GroupUsers ' + whereClause);
+        dbConnection.query('SELECT * from GroupUsers ' + whereClause,function (err, rows, fields) {
+            if (err) {
+                return reject(err)
+            }
+            resolve(rows);
+        })
+    });
+}
 
 exports.addUserToGroup = function(dbConnection, query, rows) {
     var groupName = query['groupName'];
