@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 
 const styles = {
+    box: { 
+        height: '64px',
+        backgroundImage: 'linear-gradient(to bottom, #f8d44c, #fd9e33)',
+    },
     title: {
         display: 'inline-block',
-        marginTop: '15px',
+        marginTop: '21px',
         marginLeft: '10px',
+        fontSize: '18px',
+    },
+    eat: {
+        display: 'inline-block',
+        marginTop: '5px',
+    },
+    bar: {
+        backgroundColor: 'black',
+        borderRadius: '0px',
+        height: '3px',
+        width: '24px',
     }
 }
 
@@ -18,6 +33,10 @@ class Header extends Component {
         if(!this.props.title && this.showTitle) {
             throw new DOMException("Header Component expects title prop");
         }
+        this.showEatButton = true;
+        if(this.props.showEatButton !== undefined) {
+            this.showEatButton = this.props.showEatButton;
+        }
     }
     render() {
         return(
@@ -26,12 +45,17 @@ class Header extends Component {
                     <div className="container">
                         <div className="navbar-header">
                             <span className="title" style={styles.title}>{this.props.title}</span>
-                            <button type="button" className="pull-left navbar-default navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <button type="button" className="pull-left navbar navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                                 <span className="sr-only">Toggle navigation</span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
+                                <span className="icon-bar" style={styles.bar}></span>
+                                <span className="icon-bar" style={styles.bar}></span>
+                                <span className="icon-bar" style={styles.bar}></span>
                             </button>
+                            { ( this.showEatButton )?
+                            <a href="/where2eat" className="btn eatNow pull-right" style={styles.eat}>eat</a>
+                            :
+                            <span></span>
+                            }
                         </div>
 
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -43,10 +67,6 @@ class Header extends Component {
                         </div>
                     </div>
                 </nav>
-                
-                
-                <button className="eatNow"></button>
-                <button className="settings"></button>
             </div>
         )
     }
