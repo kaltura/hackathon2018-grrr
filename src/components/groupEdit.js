@@ -32,6 +32,7 @@ class GroupEdit extends Component {
                 name: '',
                 users: [],
                 // picture: '' // placeholder for group picture
+                addedEmail: '',
         }
         this.nameFieldOpts = {};
         this.title = "Group Management";
@@ -45,19 +46,24 @@ class GroupEdit extends Component {
     }
     componentDidMount() {
         if(!this.newGroup) {
-            var userId = localStorage.getItem('userId');
-            getGroup(this.props.match.params.groupName, userId, (groupResult) => {
-                this.setState({
-                    name: groupResult.name,
-                    users: groupResult.users
-                })
-            });
+            this.getTheGroup(this.props.match.params.groupName);
         }
+    }
+    getTheGroup(groupName) {
+        var userId = localStorage.getItem('userId');
+        getGroup(this.props.match.params.groupName, userId, (groupResult) => {
+            this.setState({
+                name: groupResult.name,
+                users: groupResult.users
+            })
+        });
     }
     handleNameChange(e) {
         this.setState({ name: e.target.value });
     }
-
+    handleEmailChange(e) {
+        this.setState({ addedEmail: e.target.value });
+    }
     addGroup(e) {
         var userId = localStorage.getItem('userId');
         addGroup(this.state.name, userId, (res) => {
@@ -66,6 +72,14 @@ class GroupEdit extends Component {
                 alert("cool, added user to group "+this.state.name);
                 this.props.history.push('/groups');
             });
+        });
+        e.preventDefault();
+    }
+    addMember(e) { 
+        joinGroup(this.state.addedEmail, this.state.name, (res) => {
+            alert("added "+this.state.addedEmail+" to group "+this.state.name);
+            this.setState({addedEmail: ''});
+            this.getTheGroup(this.state.name);
         });
         e.preventDefault();
     }
@@ -99,6 +113,15 @@ class GroupEdit extends Component {
                             <div key={userEmail}>{userEmail}</div>
                         )
                     })}
+                    <FormControl
+                        style={styles.groupInput}
+                        inline
+                        type="text"
+                        value={this.state.addedEmail}
+                        placeholder="Add Member"
+                        onChange={this.handleEmailChange.bind(this)}
+                    />
+                    <Button style={styles.addGroupBtn} inline type="submit" onClick={this.addMember.bind(this)}>ADD</Button>
                 </div>
 
                 
