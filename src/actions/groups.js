@@ -52,3 +52,20 @@ export function listMyGroups(email, cb){
       }
     })
   }
+
+  export function getGroup(groupName, cb) {
+    superagent.get(config.BASE + 'users/groups?groupName='+groupName)
+    .set('Content-Type', 'application/json')
+    .send()
+    .end((err, res) => {
+      console.log("getting groups of user, result:");
+      console.log(res);
+      if(err) {
+        cb(false);
+        return false;
+      } else {
+        cb(res.body.objects[0]);
+        return true;
+      }
+    })
+  }

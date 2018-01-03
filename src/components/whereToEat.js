@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Link, Switch, HashRouter } from 'react-router-dom';
+import Header from './header.js';
 
 class WhereToEat extends Component {
     constructor(props) {
@@ -25,10 +26,11 @@ class WhereToEat extends Component {
 
     render() {
         let optionTemplate = this.options.values.map(v => (
-            <option value={v.id}>{v.name}</option>
+            <option key={v.id} value={v.id}>{v.name}</option>
         ));
         return (
-            <div where to eat >
+            <div>
+                <Header title="Where To Eat"></Header>
                 <label>{this.state.date}</label>
                 <select value={this.options.value} onChange={this.handleChange}>
                     {optionTemplate}

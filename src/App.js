@@ -23,7 +23,8 @@ class App extends Component {
             <Route exact path="/login"                  component={Login} />
             <Route exact path="/profile"                component={Profile} />
             <Route exact path="/groups"                 component={Groups} />
-            <Route exact path="/group/edit/:docID"      component={GroupEdit} />
+            <Route exact path="/group/edit/:groupName"  component={GroupEdit}/>
+            <Route exact path="/group/add"              component={GroupEdit}/>
             <Route exact path="/where2eat"              component={WhereToEat} />
             <Route exact path="/decision"               component={Decision} />
           </Switch>
