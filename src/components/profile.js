@@ -94,40 +94,20 @@ class Profile extends Component {
         });
 
         getHistory(this.state.email, (result) => {
-            // if (result.body !== false) {
-            //     let hist = result.body.rows;
-            //     this.setState({
-            //         history: hist.map(v => (
-            //             <tr>
-           // <td className="rest-name">{v.restName}</td>
-           // <td className="rest-date">{v.date}</td>
-      //  </tr>
-            //         ))
-            //     });
-            // }
-            // else {
-            //     console.log("failed to get history");
-            // }
-
-
-            let history = [ {
-                "userId": "alon.ainbinder@kaltura.com",
-                "restName": "REst 1",
-                "date": "2018-01-03T07:17:54.000Z"
-            },
-                {
-                    "userId": "alon.ainbinder@kaltura.com",
-                    "restName": "Rest 2",
-                    "date": "2018-01-03T07:18:13.000Z"
-                }];
-            this.setState({
-                history: history.map(v => (
-                    <tr>
-                        <td className="rest-name">{v.restName}</td>
-                        <td className="rest-date">{this.formatDate(v.date)}</td>
-                    </tr>
-                ))
-            });
+            if (result.body && result.body !== false) {
+                let hist = result.body.rows;
+                this.setState({
+                    history: hist.map(v => (
+                        <tr>
+                           <td className="rest-name">{v.restName}</td>
+                           <td className="rest-date">{this.formatDate(v.date)}</td>
+                       </tr>
+                    ))
+                });
+            }
+            else {
+                console.log("failed to get history");
+            }
         });
     }
 
