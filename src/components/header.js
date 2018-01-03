@@ -39,7 +39,7 @@ class Header extends Component {
         if(this.props.showTitle !== undefined) {
             this.showTitle = this.props.showTitle;
         }
-        if(!this.props.title && this.showTitle) {
+        if(!this.props.title && this.showTitle !== "false") {
             throw new DOMException("Header Component expects title prop");
         }
         this.showEatButton = true;
