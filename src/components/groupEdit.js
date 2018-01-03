@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, FormControl, ControlLabel } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Redirect, Link, Switch, HashRouter } from 'react-router-dom';
-import { getGroup, addGroup, joinGroup } from '../actions/groups.js'
+import { getGroup, addGroup, joinGroup, leaveGroup } from '../actions/groups.js'
 import Header from './header.js';
 
 const styles = {
@@ -23,6 +23,23 @@ const styles = {
         color: 'white',
         fontSize: '14px',
         fontWeight: 'bold',
+    },
+    membersBox: {
+        borderRadius: '4px',
+        backgroundColor: '#ebebeb',
+        paddingLeft: '24px',
+        fontSize: '14px',
+        lineHeight: '42px',
+    },
+    removeButton: {
+        marginTop: '10px',
+        color: 'white',
+        lineHeight: '20px',
+        marginRight: '11px',
+        width: '24px',
+        height: '24px',
+        borderRadius: '4px',
+        backgroundColor: '#94c01f',
     }
 }
 class GroupEdit extends Component {
@@ -83,6 +100,14 @@ class GroupEdit extends Component {
         });
         e.preventDefault();
     }
+    removeMember(e) {
+        var removedEmail = e.target.id;
+        leaveGroup(e.target.id, this.state.name, (res) => {
+            alert("removed "+ removedEmail+ " from group "+ this.state.name);
+            this.getTheGroup(this.state.name);
+        });
+        e.preventDefault();
+    }
     render() {
         return (
             <div>
@@ -108,11 +133,16 @@ class GroupEdit extends Component {
                 </div>
                 <div>
                     <ControlLabel>Members:</ControlLabel>
-                    { this.state.users.map((userEmail) => {
-                        return (
-                            <div key={userEmail}>{userEmail}</div>
-                        )
-                    })}
+                    <div style={styles.membersBox}>
+                        { this.state.users.map((userEmail) => {
+                            return (
+                                <div key={userEmail}>
+                                    {userEmail}
+                                    <button className="pull-right" style={styles.removeButton} onClick={this.removeMember.bind(this)} id={userEmail}>X</button>
+                                </div>
+                            )
+                        })}
+                    </div>
                     <FormControl
                         style={styles.groupInput}
                         inline
