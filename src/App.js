@@ -12,19 +12,9 @@ import Logout from './components/logout.js';
 import './App.css';
 
 class App extends Component {
-  styles = {
-    wrap : {
-        width: '100%',
-        height: '100%',
-        minHeight: '640px',
-        backgroundColor: '#f6f4e7',
-        padding: '20px 24px',
-    }
-  }
-
     render() {
         return (
-            <div className="App" style={this.styles.wrap}>
+            <div className="App">
                 <Router>
                     {<Switch>
                         <Route exact path="/" component={Login}/>

@@ -30,11 +30,13 @@ class WhereToEat extends Component {
         ));
         return (
             <div>
-                <Header title="Where To Eat"></Header>
-                <label>{this.state.date}</label>
-                <select value={this.options.value} onChange={this.handleChange}>
-                    {optionTemplate}
-                </select>
+                <Header title="Where To Eat" noBackground="true"></Header>
+                <div className="padContent">
+                    <label>{this.state.date}</label>
+                    <select value={this.options.value} onChange={this.handleChange}>
+                        {optionTemplate}
+                    </select>
+                </div>
             </div>
         )
     }

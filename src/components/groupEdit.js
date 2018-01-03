@@ -48,7 +48,7 @@ class GroupEdit extends Component {
         return (
             <div>
                 <Header title="Edit Group"></Header>
-            <form>
+            <form className="wrap padContent">
                 <div>
                     <ControlLabel>Group Name:</ControlLabel>
                     <FormControl

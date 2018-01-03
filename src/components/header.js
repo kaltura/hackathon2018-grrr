@@ -4,7 +4,10 @@ const styles = {
     box: { 
         height: '64px',
         backgroundImage: 'linear-gradient(to bottom, #f8d44c, #fd9e33)',
-        margin: '-24px -24px 0 -24px',
+    },
+    clearBox: {
+        height: '64px',
+        backgroundImage: 'none',
     },
     title: {
         display: 'inline-block',
@@ -38,10 +41,16 @@ class Header extends Component {
         if(this.props.showEatButton !== undefined) {
             this.showEatButton = this.props.showEatButton;
         }
+
+        this.boxStyle = 'box';
+        if(this.props.noBackground) {
+            this.boxStyle = 'clearBox';
+        }
+
     }
     render() {
         return(
-            <div style={styles.box}>
+            <div style={styles[this.boxStyle]}>
                 <nav className="navbar navbar-static-top" role="navigation">
                     <div className="container">
                         <div className="navbar-header">
