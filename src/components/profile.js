@@ -75,10 +75,11 @@ class Profile extends Component {
             if(result !== false && result.body.rows.length > 0) {
                 // {email:<>, nick: <>, kosher:<>, veto:<>, preferences:[]}
                 let res = result.body.rows[0];
+                var KosherBool = (res.kosher == 1)? true: false;
                 this.setState({
-                    email: res.email,
+                    email: res.userId,
                     name: res.nick,
-                    kosher: res.kosher,
+                    kosher: KosherBool,
                     veto: res.veto,
                     preferences: res.preferences
                 });
@@ -130,7 +131,7 @@ class Profile extends Component {
 
     handleSubmit(e) {
         //email, nick, kosher, veto, preferences, cb
-        updateUser(this.state.email, this.state.name, this.state.kosher, this.state.veto, this.state.preferences, (result) => {
+        updateUser(this.state.email, this.state.name, Number(this.state.kosher), this.state.veto, this.state.preferences, (result) => {
             //console.log(result);
             if(result !== false) {
                 this.setState({ saved: true });
@@ -171,8 +172,7 @@ class Profile extends Component {
                             <Food item="sandwiches"></Food>
                             <Food item="sushi"></Food>
                         </div>
-
-                        <Checkbox value={this.state.kosher} className="myCheckbox"
+                        <Checkbox value={this.state.kosher} checked={this.state.kosher} className="myCheckbox"
                                   onChange={this.handleKosherChange.bind(this)} >
                             KOSHER FOOD
                         </Checkbox>
