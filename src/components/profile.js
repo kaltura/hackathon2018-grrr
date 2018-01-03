@@ -47,10 +47,20 @@ class Profile extends Component {
             backgroundColor: '#e24026',
             border: 'solid 3px #000000',
             color: '#ffffff'
+        },
+        label : {
+            marginBotom: '18px'
+        },
+        tableTop : {
+            paddingTop: '18px'
         }
     };
 
 
+    formatDate(date) {
+        let d = new Date(date) ;
+        return d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+    }
     componentDidMount() {
         // fetch data from API
         getUser(this.state.email, (result) => {
@@ -112,7 +122,7 @@ class Profile extends Component {
                 history: history.map(v => (
                     <tr>
                         <td className="rest-name">{v.restName}</td>
-                        <td className="rest-date">{v.date}</td>
+                        <td className="rest-date">{this.formatDate(v.date)}</td>
                     </tr>
                 ))
             });
@@ -191,7 +201,7 @@ class Profile extends Component {
                     </div>
                     <div style={this.styles.form}>
                         <ControlLabel>MY HISTORY:</ControlLabel>
-                        <div>
+                        <div style={this.styles.tableTop}>
                             <table className="history">
                             {this.state.history}
                             </table>
