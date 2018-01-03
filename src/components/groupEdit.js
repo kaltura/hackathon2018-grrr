@@ -115,20 +115,23 @@ class GroupEdit extends Component {
             <form className="wrap padContent">
                 <div>
                     <ControlLabel>Group Name:</ControlLabel>
-                    <FormControl
-                        style={styles.groupInput}
-                        inline
-                        type="text"
-                        value={this.state.name}
-                        {...this.nameFieldOpts}
-                        placeholder="group name"
-                        onChange={this.handleNameChange.bind(this)}
-                    />
-                    { ( this.newGroup )? 
-                        <Button style={styles.addGroupBtn} inline type="submit" onClick={this.addGroup.bind(this)}>ADD</Button>
-                        :
-                        <span></span>
-                    }
+                    <div>
+                        <FormControl
+                            style={styles.groupInput}
+                            inline
+                            type="text"
+                            value={this.state.name}
+                            {...this.nameFieldOpts}
+                            placeholder="group name"
+                            onChange={this.handleNameChange.bind(this)}
+                        />
+                        { ( this.newGroup )? 
+                            <Button style={styles.addGroupBtn} inline type="submit" onClick={this.addGroup.bind(this)}>ADD</Button>
+                            :
+                            <span></span>
+                        }
+                    </div>
+                    
                     
                 </div>
                 <div>
