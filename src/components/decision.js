@@ -8,12 +8,8 @@ class Decision extends Component {
         super(props);
         this.state = {
             email: localStorage.getItem('userId'),
-            restaurant: {
-                RestaurantId:19700,
-                RestaurantName:	"שיפודי התקווה נמל",
-                RestaurantAddress:	"נמל תל אביב 6, תל אביב יפו",
-                RestaurantPhone:"036053360",
-            },
+            restaurant: localStorage.getItem('restaurant'),
+            emails: localStorage.getItem('users')
         };
     }
 
