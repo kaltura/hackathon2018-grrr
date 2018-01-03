@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import {joinGroup} from '../actions/groups.js'
 
 class Group extends Component {
     constructor(props) {
         super(props);
+        this.userId = localStorage.getItem('userId');
         this.editUrl = "/group/edit/"+ this.props.group.name;
     }
 
@@ -30,12 +32,20 @@ class Group extends Component {
         }
     };
 
+    handleClick(e) {
+        var btn = e.target;
+        var groupName = btn.dataset.name;
+        joinGroup(this.userId, groupName, (result) => {
+            btn.remove();
+        });
+        e.preventDefault();
+    }
     render() {
         return(
             <div style={this.styles.wrap}>
                 <a href={this.editUrl} style={this.styles.groupName}>{this.props.group.name}</a>
                 {( this.props.canJoin )?
-                <button style={this.styles.joinButton}>+ Join</button>
+                <button data-name={this.props.group.name} style={this.styles.joinButton} onClick={this.handleClick.bind(this)}>+ Join</button>
                 :
                 <span> </span>
                 }
