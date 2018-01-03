@@ -3,6 +3,7 @@ import { Button, Checkbox, FormControl, ControlLabel } from "react-bootstrap";
 import {getUser, updateUser, getHistory} from "../actions/users";
 import {listRestaurants} from "../actions/restaurants";
 import Header from './header.js';
+import Food from './food.js';
 
 class Profile extends Component {
     constructor(props) {
@@ -55,6 +56,9 @@ class Profile extends Component {
             paddingTop: '18px',
             overflow: 'scroll',
             height: '63px'
+        },
+        foods: {
+            padding: "20px 0",
         }
     };
 
@@ -156,17 +160,12 @@ class Profile extends Component {
                             {this.state.restaurants}
                         </FormControl>
                         <ControlLabel>FAVORITE FOOD:</ControlLabel>
-                        <FormControl
-                            placeholder={"Please Choose"}
-                            componentClass="select"
-                            value={this.state.preferences}
-                            onChange={this.handlePrefsChange.bind(this)}
-                        >
-                            <option value="">Select...</option>
-                            <option value="italian">Italian</option>
-                            <option value="oriental">Oriental</option>
-                            <option value="salad">Salad</option>
-                        </FormControl>
+                        <div className="foods" style={this.styles.foods}>
+                            <Food item="hamburger"></Food>
+                            <Food item="salet"></Food>
+                            <Food item="sandwiches"></Food>
+                            <Food item="sushi"></Food>
+                        </div>
 
                         <Checkbox value={this.state.kosher} className="myCheckbox"
                                   onChange={this.handleKosherChange.bind(this)} >

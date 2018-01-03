@@ -65,3 +65,8 @@ table.history tr {
 table.history td.rest-date {
   text-align: right;
 }
+ .food {
+   width: 74px;
+   height: 64px;
+   background-repeat: no-repeat;
+ }
