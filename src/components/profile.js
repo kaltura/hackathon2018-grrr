@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, FormControl, ControlLabel } from "react-bootstrap";
-import {getUser, updateUser} from "../actions/users";
+import {getUser, updateUser, getHistory} from "../actions/users";
 import {listRestaurants} from "../actions/restaurants";
 import Header from './header.js';
 
@@ -8,16 +8,16 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            email: localStorage.getItem('userId'),
             name: '',
             preferences: '',
             kosher: false,
             veto: '',
-            restaurants: []
+            restaurants: [],
+            history: [],
         };
-        this.restaurants = [];
-    }
 
+    }
 
     styles = {
         wrap : {
@@ -47,13 +47,23 @@ class Profile extends Component {
             backgroundColor: '#e24026',
             border: 'solid 3px #000000',
             color: '#ffffff'
+        },
+        label : {
+            marginBotom: '18px'
+        },
+        tableTop : {
+            paddingTop: '18px'
         }
     };
 
 
+    formatDate(date) {
+        let d = new Date(date) ;
+        return d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+    }
     componentDidMount() {
         // fetch data from API
-        getUser('gonen.radai@kaltura.com', (result) => {
+        getUser(this.state.email, (result) => {
             //console.log(result);
             if(result !== false) {
                 // {email:<>, nick: <>, kosher:<>, veto:<>, preferences:[]}
@@ -79,6 +89,43 @@ class Profile extends Component {
             this.setState({restaurants : rest.map(v => (
                 <option value={v.RestaurantId}>{v.RestaurantName}</option>
             ))});
+        });
+
+        getHistory(this.state.email, (result) => {
+            // if (result.body !== false) {
+            //     let hist = result.body.rows;
+            //     this.setState({
+            //         history: hist.map(v => (
+            //             <tr>
+           // <td className="rest-name">{v.restName}</td>
+           // <td className="rest-date">{v.date}</td>
+      //  </tr>
+            //         ))
+            //     });
+            // }
+            // else {
+            //     console.log("failed to get history");
+            // }
+
+
+            let history = [ {
+                "userId": "alon.ainbinder@kaltura.com",
+                "restName": "REst 1",
+                "date": "2018-01-03T07:17:54.000Z"
+            },
+                {
+                    "userId": "alon.ainbinder@kaltura.com",
+                    "restName": "Rest 2",
+                    "date": "2018-01-03T07:18:13.000Z"
+                }];
+            this.setState({
+                history: history.map(v => (
+                    <tr>
+                        <td className="rest-name">{v.restName}</td>
+                        <td className="rest-date">{this.formatDate(v.date)}</td>
+                    </tr>
+                ))
+            });
         });
     }
 
@@ -147,13 +194,18 @@ class Profile extends Component {
                                   onChange={this.handleKosherChange.bind(this)} >
                             KOSHER FOOD
                         </Checkbox>
-
-
-
                     </div>
                     <div style={this.styles.submitWrap}>
                         <Button type="submit" onClick={this.handleSubmit.bind(this)}
                         style={this.styles.submitButton}>SAVE</Button>
+                    </div>
+                    <div style={this.styles.form}>
+                        <ControlLabel>MY HISTORY:</ControlLabel>
+                        <div style={this.styles.tableTop}>
+                            <table className="history">
+                            {this.state.history}
+                            </table>
+                        </div>
                     </div>
                 </form>
             </div>

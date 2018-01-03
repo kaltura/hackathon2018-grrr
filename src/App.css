@@ -45,6 +45,22 @@ form .form-control {
   background-color: #f6f4e7;
 }
 
-.padContent { 
+.padContent {
   padding: 20px 24px;
+
+}
+
+table.history {
+  width: 100%;
+}
+
+table.history tr {
+  width: 100%;
+  border-top: solid 1px #999999;
+  line-height: 60px;
+  color: #999999;
+}
+
+table.history td.rest-date {
+  text-align: right;
 }
