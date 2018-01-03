@@ -14,3 +14,14 @@ exports.connectDatabase = function() {
 exports.disconnectDatabase = function(dbConnection) {
     dbConnection.end();
 };
+
+exports.getInClasue = function(csvString, column) {
+    var valuesArr = csvString.split(',');
+    var inClause = column +' in (';
+    valuesArr.forEach(function(value) {
+        inClause = inClause + "'" + value + "',";
+    });
+    inClause = inClause.slice(0, -1);
+    inClause = inClause + ")";
+    return inClause
+};

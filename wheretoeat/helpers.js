@@ -16,3 +16,20 @@ exports.getCompanyName = function(email) {
     var company = email.substr(index + 1);
     return company;
 };
+
+exports.getLastSunday = function() {
+    var t = new Date(Date.now());
+    t.setDate(t.getDate() - t.getDay());
+    return Math.floor(t.getTime()/1000);
+};
+
+
+exports.shuffleArray = function(arr) {
+    var j, x, i;
+    for (i = arr.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = arr[i];
+        arr[i] = arr[j];
+        arr[j] = x;
+    }
+};

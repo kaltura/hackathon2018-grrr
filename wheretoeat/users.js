@@ -1,4 +1,6 @@
 
+const helpers = require('./helpers.js');
+const dal = require('./dal.js');
 
 
 exports.getUsers = function(dbConnection, query) {
@@ -22,7 +24,6 @@ exports.getUsers = function(dbConnection, query) {
 
 exports.getUserHistory = function(dbConnection, query) {
     var userId = query['userId'];
-
     return new Promise(function(resolve,reject) {
         if (!userId) {
             return reject();
@@ -32,6 +33,25 @@ exports.getUserHistory = function(dbConnection, query) {
             if (err) {
                 return reject();
             }
+            console.log(rows);
+            resolve(rows);
+        })
+    });
+};
+
+exports.getHistoryFromTimeStamp = function(dbConnection, query) {
+    var users = query['users'];
+    var inClause = dal.getInClasue(users, "userId");
+    var fromTimestamp = helpers.getLastSunday();
+    var sqlQuery = "select restId from UserHistory where date > " + fromTimestamp + " and " + inClause;
+    console.log(sqlQuery);
+    return new Promise(function(resolve,reject) {
+        dbConnection.query(sqlQuery, function (err, rows, fields) {
+            if (err) {
+                return reject();
+            }
+            console.log("%%%%%%%%%");
+
             console.log(rows);
             resolve(rows);
         })
