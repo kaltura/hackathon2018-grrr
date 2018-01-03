@@ -27,13 +27,13 @@ class Groups extends Component {
 
     componentDidMount() {
         // fetch data from API
-        listMyGroups('gonen.radai@kaltura.com', (result) => {
+        listMyGroups(this.userId, (result) => {
             console.log(result);
             if(result !== false) {
                 this.setState({myGroups: result});
             }
         });
-        listOtherGroups('gonen.radai@kaltura.com', (result) => {
+        listOtherGroups(this.userId, (result) => {
             console.log(result);
             if(result !== false) {
                 this.setState({otherGroups: result});
