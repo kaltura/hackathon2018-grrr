@@ -32,6 +32,7 @@ form .form-control {
   -webkit-box-shadow: none;
   border: none;
   margin: 18px 0;
+  height: 48px;
 }
 
 .myCheckbox.checkbox label {
