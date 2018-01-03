@@ -43,8 +43,8 @@ class Header extends Component {
                         </div>
                     </div>
                 </nav>
-                
-                
+
+
                 <button className="eatNow"></button>
                 <button className="settings"></button>
             </div>
