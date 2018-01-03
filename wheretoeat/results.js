@@ -1,20 +1,13 @@
 
+const dal = require('./dal.js');
 
 exports.getUsers = function(dbConnection, query) {
-    var keyword = query['users'];
-    var userArray = keyword.split(',');
-    var inClause = 'where userId in (';
-    userArray.forEach(function(user) {
-        inClause = inClause + "'" + user + "',";
-    });
-    inClause = inClause.slice(0, -1);
-    inClause = inClause + ")";
-
+    var users = query['users'];
+    var inClause = dal.getInClasue(users, "userId");
     return new Promise(function(resolve,reject) {
-        dbConnection.query('SELECT * from Users ' + inClause, function (err, rows, fields) {
+        dbConnection.query('SELECT * from Users where ' + inClause, function (err, users, fields) {
             if (err) throw err;
-            console.log(rows);
-            resolve(rows);
+            resolve(users);
         })
     });
 };

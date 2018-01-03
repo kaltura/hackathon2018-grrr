@@ -6,6 +6,7 @@ const dal = require('./dal.js');
 const users = require('./users.js');
 const groups = require('./groups.js');
 const rest = require('./restaurant.js');
+const results = require('./results.js');
 
 
 // Add headers
@@ -49,16 +50,57 @@ app.get('/results', (req, res) => resultsGet(req, res));
 
 app.listen(3001, () => console.log('Example app listening on port 3001!'));
 
+//http://localhost:3001/rests?lat=32.084824&lon=34.799720&distance=0.5
+
 resultsGet = function(req, res) {
     var dbc =dal.connectDatabase();
-    results.getUsers(dbc, req.query).then(function(rows) {
-        return new rest.getRests(dbc, req.query, rows).then(function() {
+    results.getUsers(dbc, req.query).then(function(usersList) {
+        return rest.getRests(dbc, req.query).then(function(rests) {
+            return users.getHistoryFromTimeStamp(dbc, req.query).then(function(restIdsToRemove) {
+
+                var restData = helpers.getListResponse(rests);
+                restData = JSON.parse(restData).rows;
+
+
+                // console.log(restData);
+                var usersData = helpers.getListResponse(usersList);
+                usersData = JSON.parse(usersData).rows;
+
+                // console.log(restData);
+                var restToRemoveData = helpers.getListResponse(restIdsToRemove);
+                restToRemoveData = JSON.parse(restToRemoveData).rows;
+
+                var restResults = [];
+                restData.forEach(function(rest) {
+                    var skip = false;
+                    //check veto
+                    for (var i=0; i<usersData.length; i++) {
+                        if (usersData[i].veto === rest.RestaurantId) {
+                            skip = true;
+                            break;
+                        }
+                    }
+                    //check history
+                    for (var i=0; i<restToRemoveData.length; i++) {
+                        console.log("in loop");
+                        console.log(restToRemoveData[i]);
+                        if (restToRemoveData[i].restId === rest.RestaurantId) {
+                            skip = true;
+                            break;
+                        }
+                    }
+
+                    if (!skip) {
+                        restResults.push(rest);
+                    }
+
+                });
+
+                helpers.shuffleArray(restResults);
+                res.send(helpers.getListResponse(restResults));
+            });
 
         });
-
-
-
-        res.send(helpers.getListResponse(rows));
     });
 };
 
