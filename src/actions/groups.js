@@ -41,7 +41,6 @@ export function listMyGroups(email, cb){
     .set('Content-Type', 'application/json')
     .send()
     .end((err, res) => {
-        debugger;
       console.log("getting groups of user, result:");
       console.log(res);
       if(err) {
@@ -71,8 +70,8 @@ export function listMyGroups(email, cb){
     })
   }
 
-  export function getGroup(groupName, cb) {
-    superagent.get(config.BASE + 'users/groups?groupName='+groupName)
+  export function getGroup(groupName, userId, cb) {
+    superagent.get(config.BASE + 'groups?userId='+userId+'&groupName='+groupName)
     .set('Content-Type', 'application/json')
     .send()
     .end((err, res) => {
@@ -82,7 +81,7 @@ export function listMyGroups(email, cb){
         cb(false);
         return false;
       } else {
-        cb(res.body.objects[0]);
+        cb(res.body.rows[0]);
         return true;
       }
     })
@@ -93,7 +92,6 @@ export function listMyGroups(email, cb){
     .set('Content-Type', 'application/json')
     .send()
     .end((err, res) => {
-        debugger;
       console.log("getting groups of user, result:");
       console.log(res);
       if(err) {

@@ -45,7 +45,8 @@ class GroupEdit extends Component {
     }
     componentDidMount() {
         if(!this.newGroup) {
-            getGroup(this.props.match.params.groupName, (groupResult) => {
+            var userId = localStorage.getItem('userId');
+            getGroup(this.props.match.params.groupName, userId, (groupResult) => {
                 this.setState({
                     name: groupResult.name,
                     users: groupResult.users
@@ -63,6 +64,7 @@ class GroupEdit extends Component {
             alert("cool! group added...");
             joinGroup(userId, this.state.name, (res) => {
                 alert("cool, added user to group "+this.state.name);
+                this.props.history.push('/groups');
             });
         });
         e.preventDefault();
