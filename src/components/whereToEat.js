@@ -21,7 +21,7 @@ class WhereToEat extends Component {
             myUsers: []
         };
 
-        listMyGroups('gonen.radai@kaltura.com', (result) => {
+        listMyGroups(localStorage.getItem('userId'), (result) => {
             if (result !== false) {
                 this.setState({myGroups: result});
             }

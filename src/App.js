@@ -21,6 +21,7 @@ class App extends Component {
                         <Route exact path="/login/:fromLogout" component={Login}/>
                         <Route exact path="/logout" component={Logout}/>
                         <Route exact path="/profile" component={Profile}/>
+                        <Route exact path="/profile/:fromLogin" component={Profile}/>
                         <Route exact path="/groups" component={Groups}/>
                         <Route exact path="/group/edit/:groupName" component={GroupEdit}/>
                         <Route exact path="/group/add" component={GroupEdit}/>

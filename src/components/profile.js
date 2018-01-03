@@ -86,6 +86,7 @@ class Profile extends Component {
         });
 
         listRestaurants('', (result) => {
+            if (!result) return;
             let rest = result.rows;
             rest.unshift({RestaurantId:"", RestaurantName: "Shall Not Eat In..."});
             this.setState({restaurants : rest.map(v => (
@@ -130,9 +131,13 @@ class Profile extends Component {
     handleSubmit(e) {
         //email, nick, kosher, veto, preferences, cb
         updateUser(this.state.email, this.state.name, this.state.kosher, this.state.veto, this.state.preferences, (result) => {
-            console.log(result);
+            //console.log(result);
             if(result !== false) {
                 this.setState({ saved: true });
+                let fromLogin = this.props.match.params.fromLogin;
+                if (fromLogin) {
+                    this.props.history.push('/groups');
+                }
             }
         })
         e.preventDefault();
