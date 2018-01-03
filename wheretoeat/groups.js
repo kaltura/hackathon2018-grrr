@@ -20,11 +20,9 @@ exports.getGroups = function(dbConnection, query) {
         }
     }
 
-
-
     return new Promise(function(resolve,reject) {
         console.log('SELECT * from Groups ' + whereClause);
-        dbConnection.query('SELECT * from Groups ' + whereClause,function (err, rows, fields) {
+        dbConnection.query('SELECT * from Groups ' + whereClause, function (err, rows, fields) {
             if (err) {
                 return reject(err)
             }
