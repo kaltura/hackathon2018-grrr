@@ -12,7 +12,8 @@ class Profile extends Component {
             name: '',
             preferences: '',
             kosher: false,
-            veto: ''
+            veto: '',
+            restaurants: []
         };
         this.restaurants = [];
     }
@@ -68,11 +69,16 @@ class Profile extends Component {
         });
 
         listRestaurants('', (result) => {
+            if (result.body.Error) {
+                console.log("failed to get restaurants");
+                return;
+            }
+
             let rest = result.body.Data;
             rest.unshift({RestaurantId:"", RestaurantName: "Select..."})
-            this.restaurants = rest.map(v => (
+            this.setState({restaurants : rest.map(v => (
                 <option value={v.RestaurantId}>{v.RestaurantName}</option>
-            ));
+            ))});
         });
     }
 
@@ -122,7 +128,7 @@ class Profile extends Component {
                             value={this.state.veto}
                             onChange={this.handleVetoChange.bind(this)}
                         >
-                            {this.restaurants}
+                            {this.state.restaurants}
                         </FormControl>
                         <ControlLabel>FAVORITE FOOD:</ControlLabel>
                         <FormControl
