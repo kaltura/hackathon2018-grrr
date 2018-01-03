@@ -50,7 +50,6 @@ class Groups extends Component {
             <div>
                 <Header title="Groups"></Header>
                 <div className="wrap padContent">
-                    <div>Groups</div>
                     <div className="myGroupsList">
                         { (this.state.myGroups.length == 0)? 
                         <div>You are not a member of any group yet.</div>
