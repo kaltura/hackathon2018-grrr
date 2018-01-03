@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="168" height="173" viewBox="0 0 168 173">
+    <g fill="none" fill-rule="evenodd" transform="translate(4 4)">
+        <circle cx="83" cy="88" r="77" fill="#B3321E" stroke="#000" stroke-width="3"/>
+        <circle cx="76" cy="76" r="76" fill="#E24026" stroke="#000" stroke-width="3"/>
+        <text fill="#FFF" font-family="Montserrat-ExtraBold, Montserrat" font-size="34" font-weight="600" letter-spacing=".804">
+            <tspan x="17" y="88">GRRR!</tspan>
+        </text>
+    </g>
+</svg>
