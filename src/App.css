@@ -24,3 +24,7 @@
   -webkit-box-shadow: none;
   border: none;
 }
+
+.myCheckbox.checkbox label {
+  font-weight: 600 !important;
+}
