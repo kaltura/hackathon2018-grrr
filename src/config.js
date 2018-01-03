@@ -1,1 +1,1 @@
-export const BASE = 'https://demo9662042.mockable.io/';
+export const BASE = 'http://app-dev-int2.kaltura.com:3001/';

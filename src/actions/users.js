@@ -51,7 +51,7 @@ export function updateUser(email, nick, kosher, veto, preferences, cb){
         })
 }
 export function getHistory(email, cb){
-    superagent.post(config.BASE + 'users/'+email+'/history/')
+    superagent.get(config.BASE + 'users/'+email+'/history')
         .set('Content-Type', 'application/json')
         .send()
         .end((err, res) => {

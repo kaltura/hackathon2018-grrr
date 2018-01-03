@@ -15,8 +15,8 @@ class Profile extends Component {
             veto: '',
             restaurants: [],
             history: [],
+            saved: false
         };
-
     }
 
     styles = {
@@ -66,10 +66,11 @@ class Profile extends Component {
     componentDidMount() {
         // fetch data from API
         getUser(this.state.email, (result) => {
-            //console.log(result);
-            if(result !== false) {
+            console.log("Here is user history");
+            console.log(result);
+            if(result !== false && result.body.rows.length > 0) {
                 // {email:<>, nick: <>, kosher:<>, veto:<>, preferences:[]}
-                let res = result.body.objects[0];
+                let res = result.body.rows[0];
                 this.setState({
                     email: res.email,
                     name: res.nick,
@@ -81,15 +82,10 @@ class Profile extends Component {
         });
 
         listRestaurants('', (result) => {
-            if (result.body.Error) {
-                console.log("failed to get restaurants");
-                return;
-            }
-
-            let rest = result.body.Data;
+            let rest = result.rows;
             rest.unshift({RestaurantId:"", RestaurantName: "Shall Not Eat In..."});
             this.setState({restaurants : rest.map(v => (
-                <option value={v.RestaurantId}>{v.RestaurantName}</option>
+                <option key={v.RestaurantId} value={v.RestaurantId}>{v.RestaurantName}</option>
             ))});
         });
 
@@ -112,30 +108,30 @@ class Profile extends Component {
     }
 
     handleNameChange(e) {
-        this.setState({ name: e.target.value });
+        this.setState({ name: e.target.value, saved: false });
     }
 
     handlePrefsChange(e) {
-        this.setState({ preferences: e.target.value });
+        this.setState({ preferences: e.target.value, saved: false });
     }
 
     handleKosherChange(e) {
-        this.setState({ kosher: e.target.checked });
+        this.setState({ kosher: e.target.checked, saved: false });
     }
 
     handleVetoChange(e) {
-        this.setState({ veto: e.target.value });
+        this.setState({ veto: e.target.value, saved: false });
     }
 
-    handleSubmit() {
+    handleSubmit(e) {
         //email, nick, kosher, veto, preferences, cb
         updateUser(this.state.email, this.state.name, this.state.kosher, this.state.veto, this.state.preferences, (result) => {
             console.log(result);
             if(result !== false) {
-
-
+                this.setState({ saved: true });
             }
         })
+        e.preventDefault();
     }
 
     render() {
@@ -179,7 +175,9 @@ class Profile extends Component {
                     </div>
                     <div style={this.styles.submitWrap}>
                         <Button type="submit" onClick={this.handleSubmit.bind(this)}
-                        style={this.styles.submitButton}>SAVE</Button>
+                        style={this.styles.submitButton}>
+                        { (this.state.saved) ? 'SAVED' : 'SAVE' }
+                        </Button>
                     </div>
                     <div style={this.styles.form}>
                         <ControlLabel>MY HISTORY:</ControlLabel>
