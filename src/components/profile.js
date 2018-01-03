@@ -86,6 +86,7 @@ class Profile extends Component {
         });
 
         listRestaurants('', (result) => {
+            if (!result) return;
             let rest = result.rows;
             rest.unshift({RestaurantId:"", RestaurantName: "Shall Not Eat In..."});
             this.setState({restaurants : rest.map(v => (
