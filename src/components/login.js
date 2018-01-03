@@ -46,7 +46,7 @@ class Login extends Component {
             if(result !== false) {
                 localStorage.setItem('userId', this.state.email);
                 localStorage.setItem('nickname', this.state.nickname);
-                this.props.history.push('/profile?fromLogin=true');
+                this.props.history.push('/profile/true');
             } else {
                 alert('login failed');
             }
