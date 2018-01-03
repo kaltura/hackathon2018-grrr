@@ -25,6 +25,10 @@ const styles = {
         borderRadius: '0px',
         height: '3px',
         width: '24px',
+    },
+    menuBackground: {
+        backgroundColor: '#faf9f3',
+        boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.4)',
     }
 }
 
@@ -81,7 +85,7 @@ class Header extends Component {
                             }
                         </div>
 
-                        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <div className="collapse navbar-collapse" style={styles.menuBackground} id="bs-example-navbar-collapse-1">
                             <ul className="nav navbar-nav">
                                 <li><a href="/profile">My Profile</a></li>
                                 <li><a href="/groups">Groups</a></li>
