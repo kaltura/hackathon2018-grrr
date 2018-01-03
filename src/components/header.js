@@ -4,6 +4,7 @@ const styles = {
     box: { 
         height: '64px',
         backgroundImage: 'linear-gradient(to bottom, #f8d44c, #fd9e33)',
+        margin: '-24px -24px 0 -24px',
     },
     title: {
         display: 'inline-block',
@@ -40,7 +41,7 @@ class Header extends Component {
     }
     render() {
         return(
-            <div>
+            <div style={styles.box}>
                 <nav className="navbar navbar-static-top" role="navigation">
                     <div className="container">
                         <div className="navbar-header">
