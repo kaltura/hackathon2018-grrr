@@ -38,6 +38,34 @@ exports.getUserHistory = function(dbConnection, query) {
     });
 };
 
+exports.postUserHistory = function(dbConnection, query) {
+    var users = query['users'];
+    var restId = query['restId'];
+    var restName = query['restName'];
+    var timeStamp = Date.now();
+    var userArray = users.split(',');
+    var sqlQuery = "insert into UserHistory (userId, restId, date, restName) values ";
+    userArray.forEach(function(user) {
+        sqlQuery = sqlQuery + "('" +user + "'," + restId + "," + timeStamp + ",'" + restName + "'),";
+    });
+
+    sqlQuery = sqlQuery.slice(0, -1);
+    console.log(sqlQuery);
+
+    return new Promise(function(resolve,reject) {
+        console.log("in promises");
+
+        dbConnection.query(sqlQuery, function (err, rows, fields) {
+            if (err) {
+                console.log("in err");
+
+                return reject();
+            }
+            console.log(rows);
+            resolve(rows);
+        })
+    });
+};
 
 
 exports.updateUsers = function(dbConnection, query) {
