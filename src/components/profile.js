@@ -38,7 +38,7 @@ class Profile extends Component {
             color: '#666666',
         },
         submitWrap : {
-            padding: '20px 24px'
+            padding: '10px 24px 20px'
         },
         submitButton : {
             width: '100%',
@@ -52,7 +52,9 @@ class Profile extends Component {
             marginBotom: '18px'
         },
         tableTop : {
-            paddingTop: '18px'
+            paddingTop: '18px',
+            overflow: 'scroll',
+            height: '63px'
         }
     };
 
@@ -85,7 +87,7 @@ class Profile extends Component {
             }
 
             let rest = result.body.Data;
-            rest.unshift({RestaurantId:"", RestaurantName: "Select..."})
+            rest.unshift({RestaurantId:"", RestaurantName: "Shall Not Eat In..."});
             this.setState({restaurants : rest.map(v => (
                 <option value={v.RestaurantId}>{v.RestaurantName}</option>
             ))});
