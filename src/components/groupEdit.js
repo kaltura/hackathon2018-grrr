@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, FormControl, ControlLabel } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Redirect, Link, Switch, HashRouter } from 'react-router-dom';
-import { getGroup } from '../actions/groups.js'
+import { getGroup, addGroup, joinGroup } from '../actions/groups.js'
 import Header from './header.js';
 
+const styles = {
+    groupInput: {
+        width: '230px',
+        height: '48px',
+        borderRadius: '4px',
+        backgroundRolor: '#ebebeb',
+        display: 'inline',
+    },
+    addGroupBtn: {
+        width: '66px',
+        height: '48px',
+        borderRadius: '4px',
+        backgroundColor: '#e24026',
+        border: 'solid 3px #000000',
+        padding: '0',
+        marginLeft: '8px',
+        color: 'white',
+        fontSize: '14px',
+        fontWeight: 'bold',
+    }
+}
 class GroupEdit extends Component {
     constructor(props) {
         super(props);
@@ -13,11 +34,13 @@ class GroupEdit extends Component {
                 // picture: '' // placeholder for group picture
         }
         this.nameFieldOpts = {};
+        this.title = "Group Management";
         if(this.props.match.params.groupName) { // existing group
             this.newGroup = false;
             this.nameFieldOpts['readOnly'] = 'readOnly';
         } else {
             this.newGroup = true;
+            this.title = "Create Group";
         }
     }
     componentDidMount() {
@@ -34,30 +57,33 @@ class GroupEdit extends Component {
         this.setState({ name: e.target.value });
     }
 
-    handleSubmit() {
-        //email, nick, kosher, veto, preferences, cb
-        /*updateUser(this.state.email, this.state.name, this.state.kosher, this.state.veto, this.state.preferences, (result) => {
-            console.log(result);
-            if(result !== false) {
-
-
-            }
-        })*/
+    addGroup(e) {
+        addGroup(this.state.name, (res) => {
+            alert("cool! group added...");
+        });
     }
     render() {
         return (
             <div>
-                <Header title="Edit Group"></Header>
+                <Header title={this.title}></Header>
             <form className="wrap padContent">
                 <div>
                     <ControlLabel>Group Name:</ControlLabel>
                     <FormControl
+                        style={styles.groupInput}
+                        inline
                         type="text"
                         value={this.state.name}
                         {...this.nameFieldOpts}
                         placeholder="group name"
                         onChange={this.handleNameChange.bind(this)}
                     />
+                    { ( this.newGroup )? 
+                        <Button style={styles.addGroupBtn} inline type="submit" onClick={this.addGroup.bind(this)}>ADD</Button>
+                        :
+                        <span></span>
+                    }
+                    
                 </div>
                 <div>
                     <ControlLabel>Members:</ControlLabel>
@@ -68,7 +94,7 @@ class GroupEdit extends Component {
                     })}
                 </div>
 
-                <Button type="submit" onClick={this.handleSubmit.bind(this)}>Submit</Button>
+                
             </form>
         </div>
         )
