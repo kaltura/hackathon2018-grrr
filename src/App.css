@@ -1,14 +1,9 @@
-.App {
-  max-width: 320px;
-  margin: 0 auto;
-
-}
 
 .pageTitle {
   height: 56px;
   background-color: #e24026;
   padding: 20px 24px;
-  color: #ffffff;
+  color: #000000;
   font-family: Montserrat;
   font-size: 16px;
   font-weight: 600;
@@ -17,12 +12,23 @@
   line-height: normal;
   letter-spacing: 0.6px;
 }
-.pageTitle .form-control {
-  color: #ffffff;
-  background-color: #e24026;
+form {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.6px;
+}
+
+form .form-control {
+  color: #000000;
+  background-color: #ebebeb;
   box-shadow: none;
   -webkit-box-shadow: none;
   border: none;
+  margin: 18px 0;
 }
 
 .myCheckbox.checkbox label {

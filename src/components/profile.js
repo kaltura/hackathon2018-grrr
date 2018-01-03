@@ -108,16 +108,23 @@ class Profile extends Component {
             <div style={this.styles.wrap}>
                 <Header title="My Profile"></Header>
                 <form>
-                    <div className="pageTitle">
-                        <FormControl
-                        type="text"
-                        value={this.state.name}
-                        placeholder="Who are you?"
-                        onChange={this.handleNameChange.bind(this)}
-                    />
-                    </div>
                     <div style={this.styles.form}>
-                        <ControlLabel>FAVORITE FOOD</ControlLabel>
+                        <ControlLabel>NICKNAME:</ControlLabel>
+                        <FormControl
+                            type="text"
+                            value={this.state.name}
+                            placeholder="Who are you?"
+                            onChange={this.handleNameChange.bind(this)}
+                        />
+                        <ControlLabel>MY VETO:</ControlLabel>
+                        <FormControl
+                            componentClass="select"
+                            value={this.state.veto}
+                            onChange={this.handleVetoChange.bind(this)}
+                        >
+                            {this.restaurants}
+                        </FormControl>
+                        <ControlLabel>FAVORITE FOOD:</ControlLabel>
                         <FormControl
                             placeholder={"Please Choose"}
                             componentClass="select"
@@ -135,14 +142,7 @@ class Profile extends Component {
                             KOSHER FOOD
                         </Checkbox>
 
-                        <ControlLabel>MY VETO</ControlLabel>
-                        <FormControl
-                            componentClass="select"
-                            value={this.state.veto}
-                            onChange={this.handleVetoChange.bind(this)}
-                        >
-                            {this.restaurants}
-                        </FormControl>
+
 
                     </div>
                     <div style={this.styles.submitWrap}>
