@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Redirect, Link, Switch, HashRouter} from 'react-router-dom';
 import {listMyGroups, listOtherGroups, joinGroup} from '../actions/groups.js'
 import {Button, Checkbox, FormControl, FormGroup, ControlLabel} from "react-bootstrap";
+import {whereToEatToday} from "../actions/results";
 import "./WhereToEat.css";
 import Header from './header.js';
 
@@ -26,7 +27,7 @@ class WhereToEat extends Component {
             }
             if (result.length > 0) {
                 this.setState({myUsers: result[0].users});
-                this.selectedUsers = this.state.myUsers.map()
+                this.selectedUsers = this.state.myUsers.slice(0);
             }
         });
     }
@@ -58,19 +59,6 @@ class WhereToEat extends Component {
             height: '48px',
             objectFit: 'contain'
         },
-        nowLetsEat: {
-            width: '203px',
-            height: '27px',
-            fontFamily: 'Montserrat',
-            fontSize: '22px',
-            fontWeight: '800',
-            fontStyle: 'normal',
-            fontStretch: 'normal',
-            lineHeight: 'normal',
-            letterSpacing: '0.5px',
-            textAlign: 'left',
-            color: '#000000',
-        },
         title: {
             width: '100%',
             margin: 'auto'
@@ -80,22 +68,77 @@ class WhereToEat extends Component {
             width: '100%',
             height: '100%',
             borderRadius: '4px',
-            backgroundColor: '#ffffff'
+            backgroundColor: '#ffffff',
+            marginTop: '10px'
+        },
+        groups: {
+            backgroundColor: '#ffffff',
+            marginTop: '10px'
+        },
+        label: {
+            width: '127px',
+            height: '18px',
+            fontFamily: 'Montserrat',
+            fontSize: '14px',
+            fontWeight: '600',
+            fontStyle: 'normal',
+            fontStretch: 'normal',
+            lineHeight: 'normal',
+            letterSpacing: '0.5px',
+            textAlign: 'left',
+            color: '#666666'
+        },
+        bottomText: {
+            margin: 'auto',
+            width: '216px',
+            height: '36px',
+            fontFamily: 'Montserrat',
+            fontSize: '14px',
+            fontWeight: '500',
+            fontStyle: 'normal',
+            fontStretch: 'normal',
+            lineHeight: '1.29',
+            letterSpacing: '0.5px',
+            textAlign: 'center',
+            color: '#000000'
+        },
+        bottomDiv: {
+            width: '100%',
+            margin: 'auto',
+            textAlign: 'center'
         }
+
     };
 
     handleChange(e) {
         this.setState({groupName: e.target.value});
         this.setState({myUsers: this.state.myGroups[e.target.value].users});
-
+        this.selectedUsers = this.state.myGroups[e.target.value].users.slice(0);
     }
 
-    handleSubmit() {
-
+    handleSubmit(event) {
+        event.preventDefault();
+        whereToEatToday(this.selectedUsers, (result) => {
+            console.log(result);
+            if (result !== false) {
+                localStorage.setItem('result', result);
+                this.props.history.push('/decision');
+            } else {
+                alert('login failed');
+            }
+        });
     }
 
     handleChangeChk(e) {
-        alert(e.target.value);
+        if (this.selectedUsers.includes(e.target.value)) {
+            var index = this.selectedUsers.indexOf(e.target.value);
+            if (index > -1) {
+                this.selectedUsers.splice(index, 1);
+            }
+        } else {
+            this.selectedUsers.unshift(e.target.value)
+
+        }
     }
 
     render() {
@@ -112,7 +155,8 @@ class WhereToEat extends Component {
         if (this.state.myUsers.length > 0) {
             var myUsers = this.state.myUsers.map((user, id) => {
                 return (
-                    <Checkbox key={id} value={user} defaultChecked="true" onChange={this.handleChangeChk.bind(this)}>{user}</Checkbox>
+                    <Checkbox key={user + this.state.groupName} value={user} defaultChecked="true"
+                              onChange={this.handleChangeChk.bind(this)}>{user}</Checkbox>
                 )
             });
         }
@@ -121,21 +165,27 @@ class WhereToEat extends Component {
             <form>
                 <Header title="NOW, LET’S EAT!" noBackground></Header>
                 <div className="padContent" style={this.styles.form}>
-                    <ControlLabel>SELECT GROUP:</ControlLabel>
+                    <ControlLabel style={this.styles.label}>SELECT GROUP:</ControlLabel>
                     <FormControl
+                        style={this.styles.groups}
                         componentClass="select"
                         value={this.state.groupName}
                         onChange={this.handleChange.bind(this)}
                     >
                         {myGroupsList}
                     </FormControl>
-                    <ControlLabel>MEMBERS:</ControlLabel>
+                    <ControlLabel style={this.styles.label}>MEMBERS:</ControlLabel>
                     <FormGroup style={this.styles.members}>
                         {myUsers}
                     </FormGroup>
                 </div>
-                <div id="submitButton">
+                <div id="submitButton" onClick={this.handleSubmit.bind(this)}>
                     <div style={this.styles.submitButton}></div>
+
+                </div>
+                <div style={this.styles.bottomDiv}>
+                    <label style={this.styles.bottomText}>Click here! and let the app choose a restaurant for
+                        you!</label>
                 </div>
             </form>
 

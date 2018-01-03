@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Login from './login.js';
 
 class Logout extends Component {
     constructor(props) {
