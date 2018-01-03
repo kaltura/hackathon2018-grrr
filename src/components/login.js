@@ -7,21 +7,25 @@ import {registerUser} from "../actions/users";
 class Login extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             email: "",
             nickname: "",
-            showSplash: true
+            showSplash: true,
+            fromLogout: false
         };
-        setTimeout(() =>  { 
-            this.setState({showSplash: false})
-            var userId = localStorage.getItem('userId');
-            if(userId) {
-                this.state.email = userId;
-                this.state.nickname = localStorage.getItem('nickname');
-                this.props.history.push('/where2eat');
-            }
-        }, 3000)
+        if (this.props.match.params.fromLogout == 'fromLogout') {
+            this.state.fromLogout = true;
+        } else {
+            setTimeout(() => {
+                this.setState({showSplash: false})
+                var userId = localStorage.getItem('userId');
+                if (userId) {
+                    this.state.email = userId;
+                    this.state.nickname = localStorage.getItem('nickname');
+                    this.props.history.push('/where2eat');
+                }
+            }, 3000)
+        }
     }
 
 
@@ -50,7 +54,7 @@ class Login extends Component {
     }
 
     render() {
-        if (this.state.showSplash) {
+        if (this.state.showSplash && !this.state.fromLogout) {
             return(
                 <div background="#f8d44c">
             <div id="logoDiv">

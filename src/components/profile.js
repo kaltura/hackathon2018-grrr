@@ -12,10 +12,44 @@ class Profile extends Component {
             name: '',
             preferences: '',
             kosher: false,
-            veto: ''
+            veto: '',
+            restaurants: []
         };
         this.restaurants = [];
     }
+
+
+    styles = {
+        wrap : {
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#f6f4e7',
+        },
+        form : {
+            padding: '20px 24px',
+            fontFamily: 'Montserrat',
+            fontSize: '14px',
+            fontWeight: '600',
+            fontStyle: 'normal',
+            fontStretch: 'normal',
+            lineHeight: 'normal',
+            letterSpacing: '0.5px',
+            textAlign: 'left',
+            color: '#666666',
+        },
+        submitWrap : {
+            padding: '20px 24px'
+        },
+        submitButton : {
+            width: '100%',
+            padding: '15px',
+            borderRadius: '4px',
+            backgroundColor: '#e24026',
+            border: 'solid 3px #000000',
+            color: '#ffffff'
+        }
+    };
+
 
     componentDidMount() {
         // fetch data from API
@@ -35,11 +69,16 @@ class Profile extends Component {
         });
 
         listRestaurants('', (result) => {
+            if (result.body.Error) {
+                console.log("failed to get restaurants");
+                return;
+            }
+
             let rest = result.body.Data;
             rest.unshift({RestaurantId:"", RestaurantName: "Select..."})
-            this.restaurants = rest.map(v => (
+            this.setState({restaurants : rest.map(v => (
                 <option value={v.RestaurantId}>{v.RestaurantName}</option>
-            ));
+            ))});
         });
     }
 
@@ -72,19 +111,28 @@ class Profile extends Component {
 
     render() {
         return (
-            <div>
+            <div style={this.styles.wrap}>
                 <Header title="My Profile"></Header>
                 <form>
-                <div><FormControl
-                    type="text"
-                    value={this.state.name}
-                    placeholder="Who are you?"
-                    onChange={this.handleNameChange.bind(this)}
-                /></div>
-                    <div>
-                        <ControlLabel>Preferences</ControlLabel>
+                    <div style={this.styles.form}>
+                        <ControlLabel>NICKNAME:</ControlLabel>
                         <FormControl
-                            placeHolder={"Please Choose"}
+                            type="text"
+                            value={this.state.name}
+                            placeholder="Who are you?"
+                            onChange={this.handleNameChange.bind(this)}
+                        />
+                        <ControlLabel>MY VETO:</ControlLabel>
+                        <FormControl
+                            componentClass="select"
+                            value={this.state.veto}
+                            onChange={this.handleVetoChange.bind(this)}
+                        >
+                            {this.state.restaurants}
+                        </FormControl>
+                        <ControlLabel>FAVORITE FOOD:</ControlLabel>
+                        <FormControl
+                            placeholder={"Please Choose"}
                             componentClass="select"
                             value={this.state.preferences}
                             onChange={this.handlePrefsChange.bind(this)}
@@ -94,24 +142,20 @@ class Profile extends Component {
                             <option value="oriental">Oriental</option>
                             <option value="salad">Salad</option>
                         </FormControl>
-                        <Checkbox value={this.state.kosher}
+
+                        <Checkbox value={this.state.kosher} className="myCheckbox"
                                   onChange={this.handleKosherChange.bind(this)} >
-                            Kosher
+                            KOSHER FOOD
                         </Checkbox>
 
-                        <ControlLabel>Veto</ControlLabel>
-                        <FormControl
-                            componentClass="select"
-                            value={this.state.veto}
-                            onChange={this.handleVetoChange.bind(this)}
-                        >
-                            {this.restaurants}
-                        </FormControl>
+
 
                     </div>
-                    <Button type="submit" onClick={this.handleSubmit.bind(this)}>Submit</Button>
+                    <div style={this.styles.submitWrap}>
+                        <Button type="submit" onClick={this.handleSubmit.bind(this)}
+                        style={this.styles.submitButton}>SAVE</Button>
+                    </div>
                 </form>
-                {JSON.stringify(this.state)}
             </div>
         )
     }
