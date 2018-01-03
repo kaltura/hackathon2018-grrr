@@ -2,7 +2,7 @@ import superagent from 'superagent'
 import * as config from '../config';
 
 export function listRestaurants(keyword, cb){
-    let url = config.BASE + 'restaurant';
+    let url = config.BASE + 'rests';
     if (keyword) {
         url += '?keyword=' + keyword;
     }
@@ -16,7 +16,7 @@ export function listRestaurants(keyword, cb){
             cb(false);
             return false;
         } else {
-            cb(res);
+            cb(res.body);
             return true;
         }
     })

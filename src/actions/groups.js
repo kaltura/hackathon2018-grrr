@@ -37,7 +37,24 @@ export function listMyGroups(email, cb){
   }
 
   export function joinGroup(email, groupName, cb) {
-    superagent.get(config.BASE + 'users/groups/join?userId='+email+'&groupName='+groupName)
+    superagent.post(config.BASE + 'groups/'+groupName+'/users/'+email)
+    .set('Content-Type', 'application/json')
+    .send()
+    .end((err, res) => {
+      console.log("getting groups of user, result:");
+      console.log(res);
+      if(err) {
+        cb(false);
+        return false;
+      } else {
+        cb(res.body.objects);
+        return true;
+      }
+    })
+  }
+
+  export function leaveGroup(email, groupName, cb) {
+    superagent.delete(config.BASE + 'groups/'+groupName+'/users/'+email)
     .set('Content-Type', 'application/json')
     .send()
     .end((err, res) => {
@@ -65,6 +82,23 @@ export function listMyGroups(email, cb){
         return false;
       } else {
         cb(res.body.objects[0]);
+        return true;
+      }
+    })
+  }
+
+  export function addGroup(groupName, cb) {
+    superagent.post(config.BASE + 'users/groups?companyName=kaltura.com&groupName='+groupName)
+    .set('Content-Type', 'application/json')
+    .send()
+    .end((err, res) => {
+      console.log("getting groups of user, result:");
+      console.log(res);
+      if(err) {
+        cb(false);
+        return false;
+      } else {
+        cb(true);
         return true;
       }
     })
