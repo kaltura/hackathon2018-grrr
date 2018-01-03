@@ -85,6 +85,11 @@ exports.deleteUserFromGroup = function(dbConnection, query, rows) {
 exports.addGroup = function(dbConnection, query) {
     var groupName = query['groupName'];
     var companyName = query['companyName'];
+    var userId = query['userId'];
+    if (userId) {
+        companyName = helpers.getCompanyName(userId)
+    }
+
     //TODO - add support for image (replace NULL with blob)
 
     return new Promise(function(resolve,reject) {
