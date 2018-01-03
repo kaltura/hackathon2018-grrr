@@ -9,7 +9,7 @@ class Decision extends Component {
         this.state = {
             email: localStorage.getItem('userId'),
             restaurant: JSON.parse(localStorage.getItem('restaurant')),
-            emails: localStorage.getItem('users')
+            emails: JSON.parse(localStorage.getItem('users'))
         };
     }
 
@@ -67,7 +67,7 @@ class Decision extends Component {
     };
 
     handleSubmit(e) {
-        registerResult(this.state.emails, this.state.restaurant.RestaurantId, this.state.restaurant.restaurantName, (result) => {
+        registerResult(this.state.emails, this.state.restaurant.RestaurantId, this.state.restaurant.RestaurantName, (result) => {
             console.log(result);
             if(result !== false) {
                 //this.setState({ saved: true });

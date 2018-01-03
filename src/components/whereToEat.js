@@ -121,7 +121,14 @@ class WhereToEat extends Component {
         whereToEatToday(this.selectedUsers, (result) => {
             console.log(result);
             if (result !== false) {
-                localStorage.setItem('result', result);
+                var decidedRest = {
+                    RestaurantId: result.rows[0].RestaurantId,
+                    RestaurantName: result.rows[0].RestaurantName,
+                    RestaurantAddress: result.rows[0].RestaurantAddress,
+                    RestaurantPhone: result.rows[0].RestaurantPhone,
+                }
+                localStorage.setItem('restaurant', JSON.stringify(decidedRest));
+                localStorage.setItem('users', JSON.stringify(this.selectedUsers));
                 this.props.history.push('/decision');
             } else {
                 alert('failed getting result failed');
