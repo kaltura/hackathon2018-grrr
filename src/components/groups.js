@@ -14,7 +14,18 @@ class Groups extends Component {
         this.userId = localStorage.getItem('userId');
         this.nickname = localStorage.getItem('nickname');
     }
-    
+
+    styles = {
+        addButton: {
+            width: '56px',
+            height: '56px',
+            objectFit: 'contain',
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px'
+        }
+    };
+
     componentDidMount() {
         // fetch data from API
         listMyGroups('gonen.radai@kaltura.com', (result) => {
@@ -68,7 +79,9 @@ class Groups extends Component {
                         </div>
                         }
                     </div>
-                    <button>Add Group</button>
+                    <a href="/group/add" style={this.styles.addButton}>
+                        <img src="assets/add-group.svg" />
+                    </a>
                 </div>
             </div>
         )
