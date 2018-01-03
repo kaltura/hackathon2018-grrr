@@ -34,3 +34,18 @@ form .form-control {
 .myCheckbox.checkbox label {
   font-weight: 600 !important;
 }
+
+table.history {
+  width: 100%;
+}
+
+table.history tr {
+  width: 100%;
+  border-top: solid 1px #999999;
+  line-height: 40px;
+  color: #999999;
+}
+
+table.history td.rest-date {
+  text-align: right;
+}

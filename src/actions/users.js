@@ -50,3 +50,19 @@ export function updateUser(email, nick, kosher, veto, preferences, cb){
             }
         })
 }
+export function getHistory(email, cb){
+    superagent.post(config.BASE + 'users/'+email+'/history/')
+        .set('Content-Type', 'application/json')
+        .send()
+        .end((err, res) => {
+            console.log("get user history, result:");
+            console.log(res);
+            if(err) {
+                cb(false);
+                return false;
+            } else {
+                cb(res);
+                return true;
+            }
+        })
+}
