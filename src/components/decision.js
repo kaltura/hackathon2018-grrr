@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Button } from "react-bootstrap";
 import {registerResult} from "../actions/results";
-
+import Header from "./header.js";
 
 class Decision extends Component {
     constructor (props) {
         super(props);
         this.state = {
             email: localStorage.getItem('userId'),
-            restaurant: localStorage.getItem('restaurant'),
+            restaurant: JSON.parse(localStorage.getItem('restaurant')),
             emails: localStorage.getItem('users')
         };
     }
@@ -79,30 +79,33 @@ class Decision extends Component {
 
     render() {
         return (
-        <div className="padContent">
-            <div className="title">
-                <h1 style={this.styles.title}>YOU ARE GOING TO EAT AT:</h1>
-            </div>
-            <div className="result">
-                <span style={this.styles.result}>{this.state.restaurant.RestaurantName}</span>
-            </div>
-            <div style={this.styles.details}>
-                <div className="address">
-                    <img src={"/assets/gps.svg"}/>
-                    <span style={this.styles.address}>{this.state.restaurant.RestaurantAddress}</span>
+            <div>
+                <Header showTitle="false" noBackground></Header>
+                <div className="padContent">
+                    <div className="title">
+                        <h1 style={this.styles.title}>YOU ARE GOING TO EAT AT:</h1>
+                    </div>
+                    <div className="result">
+                        <span style={this.styles.result}>{this.state.restaurant.RestaurantName}</span>
+                    </div>
+                    <div style={this.styles.details}>
+                        <div className="address">
+                            <img src={"/assets/gps.svg"}/>
+                            <span style={this.styles.address}>{this.state.restaurant.RestaurantAddress}</span>
+                        </div>
+                        <div className="address">
+                            <img src={"/assets/phone.svg"}/>
+                            <span style={this.styles.address}>{this.state.restaurant.RestaurantPhone}</span>
+                        </div>
+                    </div>
+                    <div style={this.styles.submitWrap}>
+                        <Button type="submit" onClick={this.handleSubmit.bind(this)}
+                                style={this.styles.submitButton}>
+                            YUM!
+                        </Button>
+                    </div>
                 </div>
-                <div className="address">
-                    <img src={"/assets/phone.svg"}/>
-                    <span style={this.styles.address}>{this.state.restaurant.RestaurantPhone}</span>
-                </div>
             </div>
-            <div style={this.styles.submitWrap}>
-                <Button type="submit" onClick={this.handleSubmit.bind(this)}
-                        style={this.styles.submitButton}>
-                    YUM!
-                </Button>
-            </div>
-        </div>
         )
     }
 }
