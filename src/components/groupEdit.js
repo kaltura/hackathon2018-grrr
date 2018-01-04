@@ -135,6 +135,8 @@ class GroupEdit extends Component {
                     
                 </div>
                 <div>
+                { ( !this.newGroup )? 
+                    <div>
                     <ControlLabel>Members:</ControlLabel>
                     <div style={styles.membersBox}>
                         { this.state.users.map((userEmail) => {
@@ -146,6 +148,7 @@ class GroupEdit extends Component {
                             )
                         })}
                     </div>
+                    
                     <FormControl
                         style={styles.groupInput}
                         inline
@@ -155,6 +158,10 @@ class GroupEdit extends Component {
                         onChange={this.handleEmailChange.bind(this)}
                     />
                     <Button style={styles.addGroupBtn} inline type="submit" onClick={this.addMember.bind(this)}>ADD</Button>
+                    </div>
+                            :
+                            <span></span>
+                        }
                 </div>
 
                 
