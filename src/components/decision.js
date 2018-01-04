@@ -37,6 +37,9 @@ class Decision extends Component {
             fontFamily: 'Arimo',
             borderBottom: '4px solid #e24026'
         },
+        resultDiv: {
+            textAlign: 'center',
+        },
         address : {
             fontFamily: 'Arimo',
             fontSize: '14px',
@@ -87,7 +90,7 @@ class Decision extends Component {
                     <div className="title">
                         <h1 style={this.styles.title}>YOU ARE GOING TO EAT AT:</h1>
                     </div>
-                    <div className="result">
+                    <div className="result" style={this.styles.resultDiv}>
                         <span style={this.styles.result}>{this.state.restaurant.RestaurantName}</span>
                     </div>
                     <div style={this.styles.details}>
