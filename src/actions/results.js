@@ -5,7 +5,7 @@ export function whereToEatToday(emails, cb){
     var location = getLocation((position) => {
         var url = config.BASE + 'results?users='+emails.join(',');
         if(position !== false) {
-            url += '&lat='+position.coords.latitude+'&long='+position.coords.longitude+'&distance=0.4';
+            url += '&lat='+position.coords.latitude+'&long='+position.coords.longitude+'&distance=1';
         }
         superagent.get(url)
         .set('Content-Type', 'application/json')
@@ -23,6 +23,13 @@ export function whereToEatToday(emails, cb){
   }
 
 function getLocation(cb) {
+    cb({
+        coords: {
+            latitude: '32.084824',
+            longitude: '34.799720'
+        }
+    });
+    return;
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             cb(position);
