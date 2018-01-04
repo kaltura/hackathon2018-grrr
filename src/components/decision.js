@@ -69,6 +69,8 @@ class Decision extends Component {
     handleSubmit(e) {
         registerResult(this.state.emails, this.state.restaurant.RestaurantId, this.state.restaurant.RestaurantName, (result) => {
             console.log(result);
+            var snd = new Audio('../../assets/ass.mp3');
+            snd.play();
             if(result !== false) {
                 //this.setState({ saved: true });
             }

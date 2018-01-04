@@ -118,6 +118,8 @@ class WhereToEat extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        var snd = new Audio('../../assets/eat.mp3');
+        snd.play();
         whereToEatToday(this.selectedUsers, (result) => {
             console.log(result);
             if (result !== false) {
