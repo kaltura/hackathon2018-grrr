@@ -5,7 +5,7 @@ export function whereToEatToday(emails, cb){
     var location = getLocation((position) => {
         var url = config.BASE + 'results?users='+emails.join(',');
         if(position !== false) {
-            url += '&lat='+position.coords.latitude+'&lon='+position.coords.longitude+'&distance=1';
+            url += '&lat='+position.coords.latitude+'&lon='+position.coords.longitude+'&distance=0.7';
         }
         superagent.get(url)
         .set('Content-Type', 'application/json')
